@@ -1,0 +1,22 @@
+#ifndef BOOK_STORE_H
+#define BOOK_STORE_H
+/**
+ * @file book_store.h
+ * @author Jacob Rudawski (z1968579)
+ * @brief CSCI 241 Assignment 5
+ * @date 2022-10-06
+ */
+#include "book.h"
+
+class book_store
+{
+    book array[30];
+    int array_len;
+    
+    public:
+        book_store();
+        void read_book_data(const char*);
+
+};
+
+#endif

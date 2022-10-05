@@ -1,0 +1,5 @@
+./simplesim < $1 > myout
+./simplesim.key < $1 > keyout
+
+diff myout keyout
+
