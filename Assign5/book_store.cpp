@@ -14,20 +14,23 @@
 using std::cout;
 using std::endl;
 using std::setw;
+using std::ifstream;
+using std::ios;
 
 book_store::book_store()
 {
     array_len = 0;
 }
 
-void book_store::read_book_data(const char*)
+void book_store::read_book_data(const char* name)
 {
     ifstream input_file;
 
-    input_file.open(name_of_file, ios::binary);
+    input_file.open(name, ios::binary);
 
-    input_file.read((char*) this, sizeof(bike_store));
-    input_file.read.close();
+    input_file.read((char*) this, sizeof(book_store));
+    input_file.close();
+    sort();
 }
 
 void book_store::print() const
@@ -36,7 +39,7 @@ void book_store::print() const
 
     cout << "ISBN           Title               Price Qty." << endl;
 
-    for (int = 0; i <= array_len - 1; i++)
+    for (int i = 0; i <= array_len - 1; i++)
     {
         array[i].print();
     }
