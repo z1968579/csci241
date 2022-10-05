@@ -59,9 +59,15 @@ int book::fullfill_order(int book_order)
 
     return num_shipped;
 }
-
+/**
+ * @brief printing out the ISBNs
+ * 
+ */
 void book::print() const
 {
+
     cout << left << setw << ISBN << setw(44) << title << right << setw(5) 
          << fixed << setprecision(2) << price << setw(6) << quantity << endl;
+
+
 }
