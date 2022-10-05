@@ -19,7 +19,7 @@ book.o: book.cpp book.h
 book_store.o: book_store.cpp book_store.h
 
 book_store.h: book.h
-   
+
 # Pseudo-target to remove object code and executable files
 clean:
 	rm -f assign5 *.o

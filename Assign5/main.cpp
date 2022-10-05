@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "book.h"
+#include "book_store.h"
 using std::cout;
 using std::endl;
 

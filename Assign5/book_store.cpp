@@ -7,6 +7,8 @@
 
 #include <iomanip>
 #include <iostream>
+#include <fstream>
+#include <cstring>
 #include "book_store.h"
 
 using std::cout;
@@ -20,7 +22,12 @@ book_store::book_store()
 
 void book_store::read_book_data(const char*)
 {
+    ifstream input_file;
 
+    input_file.open(name_of_file, ios::binary);
+
+    input_file.read((char*) this, sizeof(bike_store));
+    input_file.read.close();
 }
 
 void book_store::print() const
@@ -34,4 +41,10 @@ void book_store::print() const
         array[i].print();
     }
 
+}
+
+void book_store::sort()
+{
+   // int j, min_index;
+   // book temp;
 }

@@ -16,7 +16,9 @@ class book_store
     public:
         book_store();
         void read_book_data(const char*);
-
+        void process_orders(const char*);
+        void print() const;
+        void sort();
 };
 
 #endif
