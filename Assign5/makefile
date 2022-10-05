@@ -1,7 +1,7 @@
 #
 # PROGRAM:    Assignment 5
-# PROGRAMMER: Jacob Rudawski
-# LOGON ID:   z1968579
+# PROGRAMMER: Jacob Rudawski & Jacob Kurbis
+# LOGON ID:   z1968579 & z1945650
 # DATE DUE:   2022-10-06
 #
     
