@@ -68,24 +68,23 @@ void book_store::sort()
     int min_index;
     book temp;
 
-    for(int i = 0; i <= array_len; i++)
+    for(int i = 0; i <= array_len - 1; i++)
     {
-        min_index = 1;
+        min_index = i;
         j = i + 1;
-    
         while(j < array_len)
         {
             if(strcmp(array[j].get_isbn(), array[min_index].get_isbn()) < 0)
             {
                 min_index = j;
             }
-
         j++;
-    
+        }
+
         temp = array[min_index];
         array[min_index] = array[i];
         array[i] = temp;
-        }
+        
     }
 }
 
@@ -96,7 +95,7 @@ void book_store::sort()
  */
 int book_store::binarySearch(char* ISBN)
 {
-    int low = 0,
+   /* int low = 0,
         high = array_len - 1;
     
     
@@ -121,6 +120,6 @@ int book_store::binarySearch(char* ISBN)
         }
         
     }
-    
-    return -1
+    */
+    return 1;
 }
