@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <iostream>
 #include <fstream>
+#include <string>
 #include <cstring>
 #include "book_store.h"
 
@@ -16,6 +17,10 @@ using std::endl;
 using std::setw;
 using std::ifstream;
 using std::ios;
+using std::left;
+using std::string;
+using std::right;
+using std::cerr;
 
 book_store::book_store()
 {
@@ -35,50 +40,53 @@ void book_store::read_book_data(const char* file_name)
 
 void book_store::print() const
 {
-    cout << "Book Inventory Listing" << endl;
+    cout << "Book Inventory Listing\n\n";
 
-    cout << "ISBN           Title               Price Qty." << endl;
+    cout << setw(14) << left << "ISBN" << setw(44) << "Title" << setw(5) <<right << "Price    Qty." << endl;
 
     for (int i = 0; i <= array_len - 1; i++)
     {
         array[i].print();
     }
 }
-void book_store::process_orders(const char* file_name)
+void book_store::process_orders(const string& file_name)
 {
-    ifstream file;
-   // int order_num;
-   // char isbn_num;
-   // int amount_order;
+    ifstream file(file_name);
+    char order_num[11];
+    char order_isbn[7];
+    double order_amount;
 
-    cout << "Order Listing" << endl;
+    cout << endl << "Order Listing" << endl;
     
-    file.open(file_name, ios::binary);
+    //file.open(file_name, ios::binary);
+
     if (!file)
     {
         std::cerr << "File failed to open" << endl;
         exit (-1);
     }
+    //print transaction.
+    while (file >> order_num)
+    {
+        file >> order_isbn;
+        file >> order_amount;
+
+        int index = binary_search(order_isbn);
+        if (index == -1)
+        {
+            cerr << "Search failed" << endl;
+        }
+        else
+        {
+            cout << "Search succeeded: " << " is the book to order";
+        }
+    }
+
+    file.close();
 }
 
 void book_store::sort()
 {
-    //Number 1:
-
-    //Added this sort function
-    //Will need to change up like everything else ---> ie variable names, the selection sort algorithm, etc. from you know who's code ;)
-    //Also changed in book.cpp line 69 the first setw did not have the amount in it, I added 14 according to pdf "setw(14)"
-
-    //Number 2:
-    //When running everything looks fine, may need to add some endl statements in the print function to space out, also is the
-    //executable file supposed to be "assign5"?, regardless it still works.
-
-    //Number 3:
-    //The bookdata file doesn't have a file type btw, Im assuming its
-    //supposed to be text.
-
-    //HMU if you have any questions :J
-
     int j;
     int min_index;
     book temp;
