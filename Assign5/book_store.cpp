@@ -88,3 +88,39 @@ void book_store::sort()
         }
     }
 }
+
+/**
+ * @brief binarySearch
+ * 
+ * @return int 
+ */
+int book_store::binarySearch(char* ISBN)
+{
+    int low = 0,
+        high = array_len - 1;
+    
+    
+
+    while(low <= high) 
+    {
+        int mid = (low + high) / 2;
+
+        if(strcmp(ISBN[low].get_isbn(), ISBN[mid].get_isbn()) == 0)
+        {
+            return mid;
+        }
+        
+        if(low < ISBN[mid].get_isbn())
+        {
+            high = mid - 1;
+        }
+
+        else
+        {
+            low = mid + 1;
+        }
+        
+    }
+    
+    return -1
+}
