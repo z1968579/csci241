@@ -59,10 +59,7 @@ int book::fullfill_order(int book_order)
 
     return num_shipped;
 }
-/**
- * @brief printing out the ISBNs
- * 
- */
+
 void book::print() const
 {
     //I added 14 to the first setw according to pdf "setw(14)"
