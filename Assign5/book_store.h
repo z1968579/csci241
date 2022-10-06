@@ -19,7 +19,7 @@ class book_store
         void process_orders(const char*);
         void print() const;
         void sort();
-        int binarySearch(const char*);
+        int binary_search(const char*);
 };
 
 #endif
