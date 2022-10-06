@@ -17,8 +17,8 @@ class book
 
     public:
         book();
-        char* get_isbn();
-        double get_price();
+        const char* get_isbn() const;
+        double get_price() const;
         int fullfill_order(int);
         void print() const;
 };

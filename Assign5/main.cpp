@@ -13,25 +13,13 @@ using std::endl;
 
 int main()
 {
-    int test;
     book b;
+    book_store s;
 
-    b.print();
+    s.read_book_data("bookdata");
 
-    test = b.fullfill_order(-3);
-
-    b.print();
-    cout << "shipped is " << test << endl;
-
-    test = b.fullfill_order(3);
-
-    b.print();
-    cout << "shipped is " << test << endl;
+    s.print();
     
-    test = b.fullfill_order(11);
-
-    b.print();
-    cout << "shipped is " << test << endl;   
     return 0;
 }
 
