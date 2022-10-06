@@ -22,14 +22,14 @@ book_store::book_store()
     array_len = 0;
 }
 
-void book_store::read_book_data(const char* name)
+void book_store::read_book_data(const char* file_name)
 {
-    ifstream input_file;
+    ifstream file;
 
-    input_file.open(name, ios::binary);
+    file.open(name, ios::binary);
 
-    input_file.read((char*) this, sizeof(book_store));
-    input_file.close();
+    file.read((char*) this, sizeof(book_store));
+    file.close();
     sort();
 }
 
@@ -45,6 +45,23 @@ void book_store::print() const
     }
 
 }
+
+    void book_store::process_orders(const char* file_name)
+    {
+        ifstream file;
+        int order_num;
+        char isbn_num;
+        int amount_order;
+
+        cout << "Order Listing" << endl;
+        
+        file.open(file_name);
+        if (!input_file)
+        {
+            std::cerr << "File failed to open" << endl;
+            exit (-1);
+        }
+    }
 
 void book_store::sort()
 {
