@@ -8,7 +8,6 @@
 #include <iomanip>
 #include <iostream>
 #include <fstream>
-#include <string>
 #include <cstring>
 #include "book_store.h"
 
@@ -42,23 +41,24 @@ void book_store::print() const
 {
     cout << "Book Inventory Listing\n\n";
 
-    cout << setw(14) << left << "ISBN" << setw(44) << "Title" << setw(5) <<right << "Price    Qty." << endl;
+    cout << setw(14) << left << "ISBN" << setw(44) << "Title" << setw(5) <<right << "Price    Qty." << endl << endl;
 
     for (int i = 0; i <= array_len - 1; i++)
     {
-        array[i].print();
+        books[i].print();
     }
 }
-void book_store::process_orders(const string& file_name)
+void book_store::process_orders(const char* file_name)
 {
-    ifstream file(file_name);
-    char order_num[11];
-    char order_isbn[7];
-    double order_amount;
-
-    cout << endl << "Order Listing" << endl;
+    ifstream file;
+    char order_num[7];
+    char order_isbn[11];
+    int order_amount;
+    double total;
+    int value;
+    cout << endl << "Order Listing" << endl << endl;
     
-    //file.open(file_name, ios::binary);
+    file.open(file_name);
 
     if (!file)
     {
@@ -66,22 +66,29 @@ void book_store::process_orders(const string& file_name)
         exit (-1);
     }
     //print transaction.
-    while (file >> order_num)
+    file >> order_num;
+    while (file.good())
     {
         file >> order_isbn;
         file >> order_amount;
 
+        cout << "Order #" << order_num <<": ";
         int index = binary_search(order_isbn);
+
         if (index == -1)
         {
-            cerr << "Search failed" << endl;
+            cout << "error - ISBN " << order_isbn << " does not exist" << endl;
         }
         else
         {
-            cout << "Search succeeded: " << " is the book to order";
-        }
-    }
+            value = books[index].fullfill_order(order_amount);
 
+            total = value * books[index].get_price();
+            cout << "ISBN " << order_isbn << ", " << value << " of " << order_amount << " shipped, order total $" << total << endl;
+        }
+        file >> order_num;
+    }
+    cout << endl;
     file.close();
 }
 
@@ -97,16 +104,15 @@ void book_store::sort()
         j = i + 1;
         while(j < array_len)
         {
-            if(strcmp(array[j].get_isbn(), array[min_index].get_isbn()) < 0)
+            if(strcmp(books[j].get_isbn(), books[min_index].get_isbn()) < 0)
             {
                 min_index = j;
             }
         j++;
         }
-
-        temp = array[min_index];
-        array[min_index] = array[i];
-        array[i] = temp;
+        temp = books[min_index];
+        books[min_index] = books[i];
+        books[i] = temp;
     }
 }
 
@@ -115,33 +121,27 @@ void book_store::sort()
  * 
  * @return int 
  */
-int book_store::binary_search(const char* ISBN)
+int book_store::binary_search(const char* search)
 {
-   /* int low = 0,
-        high = array_len - 1;
-    
-    
+    int low = 0,
+    high = array_len - 1;
 
     while(low <= high) 
     {
         int mid = (low + high) / 2;
 
-        if(strcmp(ISBN[low].get_isbn(), ISBN[mid].get_isbn()) == 0)
+        if(strcmp(search, books[mid].get_isbn()) == 0)
         {
             return mid;
         }
-        
-        if(low < ISBN[mid].get_isbn())
+        if(strcmp(search, books[mid].get_isbn()) < 0)
         {
             high = mid - 1;
         }
-
         else
         {
             low = mid + 1;
-        }
-        
-    }
-    */
-    return 1;
+        }   
+    }   
+    return -1;
 }

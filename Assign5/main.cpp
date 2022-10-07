@@ -17,7 +17,10 @@ int main()
     book_store s;
 
     s.read_book_data("bookdata");
+    s.print();
 
+    s.read_book_data("bookdata");
+    s.process_orders("orders.txt");
     s.print();
     
     return 0;

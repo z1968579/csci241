@@ -6,18 +6,18 @@
  * @brief CSCI 241 Assignment 5
  * @date 2022-10-06
  */
-#include <string>
+
 #include "book.h"
 
 class book_store
 {
-    book array[30];
+    book books[30];
     int array_len;
     
     public:
         book_store();
         void read_book_data(const char*);
-        void process_orders(const std::string&);
+        void process_orders(const char*);
         void print() const;
         void sort();
         int binary_search(const char*);
