@@ -6,12 +6,11 @@
  * @brief CSCI 241 Assignment 5
  * @date 2022-10-06
  */
-
 #include "book.h"
 
 class book_store
 {
-    book books[30];
+    book books[30]; // array called books with book objects
     int array_len;
     
     public:
@@ -22,5 +21,4 @@ class book_store
         void sort();
         int binary_search(const char*);
 };
-
 #endif

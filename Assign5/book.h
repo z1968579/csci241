@@ -8,7 +8,7 @@
  */
 class book
 {
-    char ISBN[11];
+    char ISBN[11]; //array of ISBN
     char title[41];
 
     double price;

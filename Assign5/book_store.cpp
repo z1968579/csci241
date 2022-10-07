@@ -20,11 +20,19 @@ using std::left;
 using std::string;
 using std::right;
 using std::cerr;
-
+/**
+ * @brief Construct a new book store::book store object
+ * 
+ */
 book_store::book_store()
 {
     array_len = 0;
 }
+/**
+ * @brief Opens file bookdata and reads them
+ * 
+ * @param file_name bookdata
+ */
 void book_store::read_book_data(const char* file_name)
 {
     ifstream file;
@@ -39,6 +47,10 @@ void book_store::read_book_data(const char* file_name)
     file.close();
     sort();
 }
+/**
+ * @brief Prints book
+ * 
+ */
 void book_store::print() const
 {
     cout << "Book Inventory Listing\n\n";
@@ -50,14 +62,20 @@ void book_store::print() const
         books[i].print();
     }
 }
+/**
+ * @brief Opens and reads orders.txt then searches for all ISBN's
+ * 
+ * @param file_name orders.txt
+ */
 void book_store::process_orders(const char* file_name)
 {
     ifstream file;
     char order_num[7];
     char order_isbn[11];
     int order_amount;
-    double total;
-    int shipped;
+    int shipped; //amount shipped
+    double total; //total price
+
     cout << endl << "Order Listing" << endl << endl;
     
     file.open(file_name);
@@ -67,9 +85,8 @@ void book_store::process_orders(const char* file_name)
         std::cerr << "File failed to open" << endl;
         exit (-1);
     }
-    //print transaction.
     file >> order_num;
-    while (file.good())
+    while (file.good()) //checks until file is ended
     {
         file >> order_isbn;
         file >> order_amount;
@@ -93,6 +110,10 @@ void book_store::process_orders(const char* file_name)
     cout << endl;
     file.close();
 }
+/**
+ * @brief Selection sort for bookdata
+ * 
+ */
 void book_store::sort()
 {
     int j;
@@ -117,9 +138,10 @@ void book_store::sort()
     }
 }
 /**
- * @brief binarySearch
+ * @brief searches for ISBN errors if it does not exist
  * 
- * @return int 
+ * @param search is order_amount
+ * @return int -1 if error
  */
 int book_store::binary_search(const char* search)
 {

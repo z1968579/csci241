@@ -10,7 +10,6 @@
 
 int main()
 {
-    book b;
     book_store s;
 
     s.read_book_data("bookdata");

@@ -18,7 +18,10 @@ using std::fixed;
 using std::left;
 using std::right;
 using std::setprecision;
-
+/**
+ * @brief Construct a new book::book object
+ * 
+ */
 book::book()
 {
     strcpy (ISBN, "None");
@@ -26,14 +29,30 @@ book::book()
     price = 0.00;
     quantity = 0;
 }
+/**
+ * @brief Gets the ISBN from bookdata
+ * 
+ * @return const char* isbn
+ */
 const char* book::get_isbn() const
 {
     return ISBN;
 }
+/**
+ * @brief Gets the price of book
+ * 
+ * @return double price
+ */
 double book::get_price() const
 {
     return price;
 }
+/**
+ * @brief Fills order with the amount that can be shipped
+ * 
+ * @param book_order Order amount
+ * @return int shipped
+ */
 int book::fullfill_order(int book_order)
 {
     int num_shipped;
@@ -55,7 +74,10 @@ int book::fullfill_order(int book_order)
 
     return num_shipped;
 }
-
+/**
+ * @brief prints bookdata
+ * 
+ */
 void book::print() const
 {
     cout << left << setw(14) << ISBN << setw(44) << title << right << setw(5) 
