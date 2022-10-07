@@ -26,17 +26,14 @@ book::book()
     price = 0.00;
     quantity = 0;
 }
-
 const char* book::get_isbn() const
 {
     return ISBN;
 }
-
 double book::get_price() const
 {
     return price;
 }
-
 int book::fullfill_order(int book_order)
 {
     int num_shipped;
@@ -54,7 +51,6 @@ int book::fullfill_order(int book_order)
     }
 
     num_shipped = quantity;
-
     quantity = 0;
 
     return num_shipped;
@@ -62,7 +58,6 @@ int book::fullfill_order(int book_order)
 
 void book::print() const
 {
-    //I added 14 to the first setw according to pdf "setw(14)"
     cout << left << setw(14) << ISBN << setw(44) << title << right << setw(5) 
          << fixed << setprecision(2) << price << setw(6) << quantity << endl;
 }

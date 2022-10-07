@@ -5,11 +5,8 @@
  * @date 2022-10-06
  */
 
-#include <iostream>
 #include "book.h"
 #include "book_store.h"
-using std::cout;
-using std::endl;
 
 int main()
 {

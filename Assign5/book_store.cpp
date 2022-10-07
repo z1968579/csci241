@@ -25,18 +25,20 @@ book_store::book_store()
 {
     array_len = 0;
 }
-
 void book_store::read_book_data(const char* file_name)
 {
     ifstream file;
 
     file.open(file_name, ios::binary);
-
+    if (!file)
+    {
+        std::cerr << "File failed to open" << endl;
+        exit (-2);
+    }
     file.read((char*) this, sizeof(book_store));
     file.close();
     sort();
 }
-
 void book_store::print() const
 {
     cout << "Book Inventory Listing\n\n";
@@ -55,7 +57,7 @@ void book_store::process_orders(const char* file_name)
     char order_isbn[11];
     int order_amount;
     double total;
-    int value;
+    int shipped;
     cout << endl << "Order Listing" << endl << endl;
     
     file.open(file_name);
@@ -81,17 +83,16 @@ void book_store::process_orders(const char* file_name)
         }
         else
         {
-            value = books[index].fullfill_order(order_amount);
+            shipped = books[index].fullfill_order(order_amount);
 
-            total = value * books[index].get_price();
-            cout << "ISBN " << order_isbn << ", " << value << " of " << order_amount << " shipped, order total $" << total << endl;
+            total = shipped * books[index].get_price();
+            cout << "ISBN " << order_isbn << ", " << shipped << " of " << order_amount << " shipped, order total $" << total << endl;
         }
         file >> order_num;
     }
     cout << endl;
     file.close();
 }
-
 void book_store::sort()
 {
     int j;
@@ -115,7 +116,6 @@ void book_store::sort()
         books[i] = temp;
     }
 }
-
 /**
  * @brief binarySearch
  * 
@@ -123,8 +123,8 @@ void book_store::sort()
  */
 int book_store::binary_search(const char* search)
 {
-    int low = 0,
-    high = array_len - 1;
+    int low = 0;
+    int high = array_len - 1;
 
     while(low <= high) 
     {
