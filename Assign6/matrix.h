@@ -6,12 +6,15 @@
  * @brief CSCI 330 Assignment 6
  * @date 2022-10-13
  */
-#include <iostream>
 class matrix
 {
-    int matrix_array[2][2];
+
+    private:
+    
+        int matrix_array[2][2];
 
     public:
+
         //Constructors
         matrix();
         matrix(int[2][2]);
@@ -35,5 +38,7 @@ class matrix
         bool operator!=(const matrix&) const;
         friend std::ostream& operator<<(std::ostream&, const matrix&);
         friend matrix operator*(const int&, const matrix&);
+
+
 };
 #endif
