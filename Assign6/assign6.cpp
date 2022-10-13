@@ -15,8 +15,9 @@ using std::endl;
 
 int main()
 {
-    int array1[2][2] = {{5, 7}, {3, 2}};
-    int array2[2][2] = {{2, 3}, {1, 4}};
+    
+    //int array1[2][2] = {{5, 7}, {3, 2}};
+    //int array2[2][2] = {{2, 3}, {1, 4}};
 
     // Test identity matrix constructor
 
@@ -26,7 +27,7 @@ int main()
     cout << "m1 = " << m1 << endl << endl;
 
     // Test array initialization constructor
-
+/*
     cout << "2. Testing array initialization constructor\n\n";
 
     matrix m2(array1);
@@ -88,6 +89,6 @@ int main()
 
     cout << m1 << " and " << m3;
     cout << ((m1 != m3) ? " are not equal\n" : " are equal\n");
-
+*/
     return 0;
 }
