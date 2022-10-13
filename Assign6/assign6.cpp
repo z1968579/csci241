@@ -69,7 +69,7 @@ int main()
 
     cout << "det(m2 * m3) and det(m2) * det(m3) are ";
     cout << (((m2 * m3).determinant() == m2.determinant() * m3.determinant()) ? 
-      "equal\n\n" : "not equal\n\n");
+    "equal\n\n" : "not equal\n\n");
 
     // Test relational operators
 

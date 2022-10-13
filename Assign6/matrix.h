@@ -33,15 +33,7 @@ class matrix
         matrix operator*(const matrix&) const;//reference to matrix_object "argument"& in this one
         bool operator==(const matrix&) const;
         bool operator!=(const matrix&) const;
-        friend ostream& operator<<(ostream &, const matrix&);
+        friend ostream& operator<<(ostream&, const matrix&);
         friend matrix operator*(const int&, const matrix&);
-
-        //***Check these class methods out and double check if they are prototyped correctly please!***
-        //***If any are wrong the implementation headers of these prototypes in the matrix.cpp file ***
-        //***will have to be changed!                                                               ***
-        //
-        //                                          Thankyou!
-
 };
-#endif
 #endif

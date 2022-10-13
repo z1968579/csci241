@@ -35,6 +35,7 @@ matrix matrix::operator*(const matrix&) const//reference to matrix_object "argum
 
 bool matrix::operator==(const matrix&) const
 {
+    
 }
 
 
