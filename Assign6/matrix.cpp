@@ -1,7 +1,7 @@
 /**
  * @file matrix.cpp
  * @author Jacob Rudawski (z1968579) & Jacob Kurbis (z1945650)
- * @brief CSCI 330 Assignment 6
+ * @brief CSCI 241 Assignment 6
  * @date 2022-10-13
  * 
  */
@@ -12,6 +12,17 @@ using std::cout;
 using std::endl;
 using std::ostream;
 
+/**
+ * Method: matrix::matrix()
+ *
+ * @brief Default constructor; Set the elements of the matrix array to 
+ *        the "identity matrix", such that all the elements on the main 
+ *	      diagonal are equal to 1 and all other elements are equal to 0, e.g.:
+ *
+ * @param //Nothing
+ *
+ * @return Nothing
+ **/
 matrix::matrix()
 {
 	//Loop to initialize identity matrix. Main diagonal = 1
@@ -33,8 +44,21 @@ matrix::matrix()
         }
 	}
 }
+
+
+/**
+ * Method: matrix(int [2][2])
+ *
+ * @brief Array initialization constructor; Set the elements of the matrix array to 
+ *        the corresponding elements in the array passed into the constructor.
+ *
+ * @param inMatrix: A 2D array of integers with two rows and two columns
+ *
+ * @return Nothing
+ **/
 matrix::matrix(int inMatrix[2][2])
 {
+	//Initializing the two by two 2D Array
 	for(int row = 0; row < 2; row++)
     {
 		for(int col = 0; col < 2; col++)
@@ -44,6 +68,18 @@ matrix::matrix(int inMatrix[2][2])
     }   
 }
 
+
+/**
+ * Method: friend std::ostream& operator<<(std::ostream&, const matrix&)
+ *
+ * @brief: Prints the elements of the matrix separated by commas. Using square brackets
+ *         around each row of the matrix and around the matrix as a whole.
+ *
+ * @param output: Is a reference to an ostream object, representing the left operand of the stream insertion expression.
+ * @param new_matrix: Is a reference to a constant matrix object, representing the right operand of the expression.
+ *
+ * @return output: A reference to an ostream object (i.e., the first parameter).
+ **/
 ostream& operator<<(ostream& output, const matrix& new_matrix)
 {
     	//Creates output in specified format and stores in ostream object
@@ -53,6 +89,18 @@ ostream& operator<<(ostream& output, const matrix& new_matrix)
 	return output;	//Returns ostream object
 }
 
+
+/**
+ * Method: friend matrix operator*(const int&, const matrix&)
+ *
+ * @brief: This method finds the product cA of a number c (also called a scalar in the parlance of abstract algebra)
+ *         and a matrix A is computed by multiplying every entry of A by c: (cA)i,j = c · Ai,j.
+ *
+ * @param left: An integer representing the left operand of the scalar multiplication
+ * @param right: A reference to a constant matrix object, representing the right operand of the scalar multiplication.
+ *
+ * @return result: The result of multiplying the elements of the matrix right operand by the integer left operand (a new matrix object).
+ **/
 matrix operator*(const int& left, const matrix& right)
 {
 	//Declare and initialize Matrix object using values of constructor
@@ -72,6 +120,16 @@ matrix operator*(const int& left, const matrix& right)
 
 }
 
+
+/**
+ * Method: int determinant() const
+ *
+ * @brief: To find the dterminant of the two by two 2D array matrix
+ *
+ * @param //Nothing
+ *
+ * @return x: The integer determinant of the matrix object.
+ **/
 int matrix::determinant() const
 {
     int x = matrix_array[0][0] * matrix_array[1][1] - matrix_array[0][1] * matrix_array[1][0];
@@ -79,6 +137,16 @@ int matrix::determinant() const
 }
 
 
+/**
+ * Method: matrix operator+(const matrix&) const;
+ *
+ * @brief: This method finds the sum of A+B of two 2-by-2 matrices. 
+ *         A and B is calculated entrywise: (A + B)i,j = Ai,j + Bi,j, where 1 ≤ i ≤ 2 and 1 ≤ j ≤ 2
+ *
+ * @param right: A reference to a constant matrix object, representing the right operand of the matrix addition expression.
+ *
+ * @return sum: The result of the matrix addition of the left and right operands (a new matrix object).
+ **/
 matrix matrix::operator+(const matrix& right) const
 {
     matrix sum = *this;
@@ -98,7 +166,18 @@ matrix matrix::operator+(const matrix& right) const
 }
 
 
-matrix matrix::operator*(const int& right) const//reference to int "argument"& in this one
+/**
+ * Method: matrix operator*(const int&) const
+ *
+ * @brief: This method finds the product Ac of a matrix A and a number c 
+ *         (also called a scalar in the parlance of abstract algebra) 
+ *         computed by multiplying every entry of A by c: (Ac)i,j = Ai,j · c.
+ *
+ * @param right: An integer representing the right operand of the scalar multiplication.
+ *
+ * @return result: The result of multiplying the elements of the matrix left operand by the integer right operand (a new matrix object).
+ **/
+matrix matrix::operator*(const int& right) const
 {
     matrix result = *this;
 	
@@ -116,8 +195,16 @@ matrix matrix::operator*(const int& right) const//reference to int "argument"& i
 }
 
 
-
-matrix matrix::operator*(const matrix& right) const//reference to matrix_object "argument"& in this one
+/**
+ * Method: matrix operator*(const matrix&) const
+ *
+ * @brief: This method finds the product of two 2-by-2 matrices
+ *
+ * @param right: A reference to a constant matrix object, representing the right operand of the matrix multiplication expression
+ *
+ * @return result: The result of multiplying the elements of the matrix left operand by the matrix right operand (a new matrix object).
+ **/
+matrix matrix::operator*(const matrix& right) const
 {
     matrix result;
 
@@ -131,9 +218,21 @@ matrix matrix::operator*(const matrix& right) const//reference to matrix_object 
 }
 
 
+/**
+ * Method: bool operator==(const matrix&) const
+ *
+ * @brief: This method returns true if all elements of the left operand are equal to the corresponding elements of 
+ *         the right operand. Otherwise, the member function will return false.
+ *
+ * @param right: A reference to a constant matrix object, representing the right operand of the relational expression
+ *
+ * @return true: A boolean value representing true
+ * @return false: A boolean value representing false
+ **/
 bool matrix::operator==(const matrix& right) const
 {
-    	if(this->matrix_array[0][0] == right.matrix_array[0][0] &&
+	//Testing each left operand and right operand equivalency
+        if(this->matrix_array[0][0] == right.matrix_array[0][0] &&
 	   this->matrix_array[0][1] == right.matrix_array[0][1] &&
 	   this->matrix_array[1][0] == right.matrix_array[1][0] &&
 	   this->matrix_array[1][1] == right.matrix_array[1][1])
@@ -143,7 +242,17 @@ bool matrix::operator==(const matrix& right) const
 }
 
 
-
+/**
+ * Method: bool operator!=(const matrix&) const
+ *
+ * @brief: This method will return false if the left operand equals the right operand.
+ *         Otherwise, the member function will return true.
+ *
+ * @param right: A reference to a constant matrix object, representing the right operand of the relational expression
+ *
+ * @return false: A boolean value that is returned if element of each matrix is the same
+ * @return true: A boolean value that is returned if element of each matrix is not the same
+ **/
 bool matrix::operator!=(const matrix& right) const
 {
     for (int row = 0; row < 2; row++)
