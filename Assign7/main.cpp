@@ -1,15 +1,14 @@
-//*******************************************************************
-//
-//  inpost_main.cpp
-//  CSCI 241 Assignment 7
-//
-//  Created by name (z-ID)
-//
-//*******************************************************************
+/**
+ * @file main.cpp
+ * @author Jacob Rudawski (z1968579) & Jacob Kurbis (z1945650)
+ * @brief CSCI 241 Assignment 7
+ * @date 2022-20-22
+ */
 
 #include <iostream>
 #include <string>
 #include "inpost.h"
+#include "mystack.h"// may not be needed to be included in this file
 
 using std::cin;
 using std::cout;
@@ -33,6 +32,3 @@ int main()
         postfix = convert(infix);
         cout << "postfix: " << postfix << endl << endl;
     }
-
-    return 0;
-}

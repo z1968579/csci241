@@ -1,8 +1,8 @@
 #
 # PROGRAM:    Assignment 7
-# PROGRAMMER: your name
-# LOGON ID:   your z-id
-# DATE DUE:   due date of program
+# AUTHOR:    Jacob Rudawski & Jacob Kurbis 
+# LOGON ID:  (z1968579)     & (z1945650)
+# DATE DUE:   10-20-2022
 #
     
 # Compiler variables
