@@ -15,9 +15,12 @@ using std::string;
 using std::endl;
 
 /**
- * @brief 
+ * Method: bool isOperator(char operatr);
  * 
- * @param operator 
+ * @brief: 
+ * 
+ * @param operator
+ * 
  * @return true 
  * @return false 
  **/
@@ -35,7 +38,9 @@ bool isOperator(char operatr)
 }
 
 /**
- * @brief 
+ * Method: int precedence(char operatr);
+ * 
+ * @brief: 
  * 
  * @return int 
  **/

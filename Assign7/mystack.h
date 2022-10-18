@@ -8,6 +8,36 @@
  */
 
 #include <iostream>
+#include <cstdef>
+#include <cstdlib>
 
+class mystack
+{
+    private:
+        char* stk_array;//This is probably a wrong declaration for this data member; will affect other constructors and methods
+        size_t stk_capacity;
+        size_t stk_size;
+
+
+    public:
+        //Methods:
+
+        //Constructors:
+        mystack();//Default Constructor
+        mystackcopy(const mystack&);//Copy Constructor
+
+        //Destructor:
+        ~mystack();
+
+        //Other Methods
+        mystack& operator=(const mystack&);
+        size_t capacity() const;
+        size_t size() const;
+        bool empty() const;
+        void clear();
+        void reserve(size_t);
+        const char& top() const;
+        void pop();
+}
 
 #endif
