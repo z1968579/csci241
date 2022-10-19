@@ -7,12 +7,20 @@
 
 #include <iostream>
 #include <string>
+#include <cctype>
 #include "inpost.h"
 
 using std::cin;
 using std::cout;
 using std::string;
 using std::endl;
+
+string convert(const string& infix)
+{
+    string postfix;
+
+    return postfix;
+}
 
 /**
  * Method: bool isOperator(char operatr);
@@ -30,7 +38,6 @@ bool isOperator(char operatr)
     {
         return true;
     }
-
     else
     {
         return false;
@@ -52,17 +59,14 @@ int precedence(char operatr)
     {
         operatr_amount = 20;
     }
-
     else if(operatr == '*' || operatr == '/')
     {
         operatr_amount = 15;
     }
-
     else if(operatr == '+' || operatr == '-')
     {
         operatr_amount = 10;
     }
-
     else
     {
         operatr_amount = 5;
