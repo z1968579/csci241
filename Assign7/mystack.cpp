@@ -45,7 +45,7 @@ mystack::mystack(const mystack& x)
 
     // Step 2
     if (stk_capacity > 0)
-        stk_array = new int[stk_capacity];//Not sure if an int is fine here or need to change it to the char* type
+        stk_array = new char[stk_capacity];//Not sure if an int is fine here or need to change it to the char* type
     else
         stk_array = nullptr;
 
@@ -61,12 +61,11 @@ mystack::mystack(const mystack& x)
  * @brief: Destroy the mystack object
  *
  */
-/*
-*mystack::~mystack()
+mystack::~mystack()
 {
-    delete[]//place name of 
+    delete[] stk_array;//place name of 
 }
-*/
+
 
 /**
  * Method: mystack& operator=(const mystack&);
@@ -77,12 +76,11 @@ mystack::mystack(const mystack& x)
  *
  * @return: mystack& 
  **/
-/*
 mystack& mystack::operator=(const mystack&)
 {
-
+    return *this;
 }
-*/
+
 
 /**
  * Method: size_t capacity() const;
@@ -91,12 +89,11 @@ mystack& mystack::operator=(const mystack&)
  *
  * @return: size_t 
  **/
-/*
 size_t mystack::capacity() const
 {
-
+    return stk_capacity;
 }
-*/
+
 
 /**
  * Method: size_t size() const;
@@ -105,12 +102,11 @@ size_t mystack::capacity() const
  *
  * @return: size_t 
  **/
-/*
 size_t mystack::size() const
 {
-
+    return stk_size;
 }
-*/
+
 
 /**
  * Method: bool empty() const;
@@ -120,12 +116,11 @@ size_t mystack::size() const
  * @return true 
  * @return false 
  **/
-/*
 bool mystack::empty() const
 {
-
+    return (stk_size == 0);
 }
-*/
+
 
 /**
  * Method: void clear();
@@ -133,12 +128,11 @@ bool mystack::empty() const
  * @brief: 
  *
  **/
-/*
 void mystack::clear()
 {
-
+    stk_size = 0;
 }
-*/
+
 
 /**
  * Method: void reserve(ssize_t);
@@ -147,12 +141,11 @@ void mystack::clear()
  *
  * @param: size_t
  **/
-/*
 void mystack::reserve(size_t)
 {
 
 }
-*/
+
 
 /**
  * Method: const char& top() const;
@@ -161,12 +154,21 @@ void mystack::reserve(size_t)
  *
  * @return: const char&
  **/
-/*
 const char& mystack::top() const
 {
     return stk_array[stk_size - 1];
 }
-*/
+
+/**
+ * @brief 
+ * 
+ * @param value 
+ *   
+ */
+void mystack::push(char value)
+{
+
+}
 
 /**
  * Method: void pop();
@@ -174,9 +176,7 @@ const char& mystack::top() const
  * @brief: 
  *
  **/
-/*
 void mystack::pop()
 {
-    stk_size = stk_size - 1;
+    stk_size--;
 }
-*/

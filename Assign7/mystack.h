@@ -15,7 +15,7 @@
 class mystack
 {
     private:
-        int* stk_array;//This is probably a wrong declaration for this data member; will affect other constructors and methods
+        char* stk_array;//This is probably a wrong declaration for this data member; will affect other constructors and methods
         size_t stk_capacity;
         size_t stk_size;
 
@@ -38,6 +38,7 @@ class mystack
         void clear();
         void reserve(size_t);
         const char& top() const;
+        void push(char);
         void pop();
 };
 
