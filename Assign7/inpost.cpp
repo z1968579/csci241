@@ -8,6 +8,7 @@
 #include <iostream>
 #include <string>
 #include <cctype>
+#include "mystack.h"
 #include "inpost.h"
 
 using std::cin;
@@ -18,7 +19,50 @@ using std::endl;
 string convert(const string& infix)
 {
     string postfix;
-
+    mystack s;
+    int i = 0;
+    while(infix[i] != '\0')
+    {
+        // if operand add to the postfix expression
+        if((infix[i] >= 'a' && infix[i] <= 'z') || (infix[i] >= 'A' && infix[i] <= 'Z'))          
+        {
+            postfix += infix[i];
+            i++;
+        }
+        // if opening bracket then push the stack
+        else if(infix[i] == '(')
+        {
+            s.push(infix[i]);
+            i++;
+        }
+        // if closing bracket encounted then keep popping from stack until 
+        // closing a pair opening bracket is not encountered
+        else if(infix[i] == ')')
+        {
+            while(s.top() != '(')
+            {
+                postfix += s.top();
+                s.pop();
+            }
+            s.pop();
+            i++;
+        }
+        else            
+        {
+            while (!s.empty() && precedence(infix[i]) <= precedence(s.top()))
+            {
+                postfix += s.top();
+                s.pop();
+            }
+            s.push(infix[i]);
+            i++;
+        }
+    }
+    while(!s.empty())
+    {
+        postfix += s.top();
+        s.pop();
+    }
     return postfix;
 }
 
