@@ -29,6 +29,8 @@ int main()
     while (getline(cin, infix))
     {
         cout << "  infix: " << infix << endl;
-        postfix = convert(infix);
+        //postfix = convert(infix);
         cout << "postfix: " << postfix << endl << endl;
     }
+    
+}

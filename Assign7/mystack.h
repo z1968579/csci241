@@ -8,13 +8,14 @@
  */
 
 #include <iostream>
-#include <cstdef>
+#include <stdexcept>
+#include <iomanip>
 #include <cstdlib>
 
 class mystack
 {
     private:
-        char* stk_array;//This is probably a wrong declaration for this data member; will affect other constructors and methods
+        int* stk_array;//This is probably a wrong declaration for this data member; will affect other constructors and methods
         size_t stk_capacity;
         size_t stk_size;
 
@@ -24,7 +25,7 @@ class mystack
 
         //Constructors:
         mystack();//Default Constructor
-        mystackcopy(const mystack&);//Copy Constructor
+        mystack(const mystack&);//Copy Constructor
 
         //Destructor:
         ~mystack();
@@ -38,6 +39,6 @@ class mystack
         void reserve(size_t);
         const char& top() const;
         void pop();
-}
+};
 
 #endif

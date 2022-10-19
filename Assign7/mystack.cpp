@@ -7,7 +7,6 @@
 
 #include <iostream>
 #include <string>
-#include <cstdef>
 #include <cstdlib>
 #include "mystack.h"
 
@@ -38,7 +37,7 @@ mystack::mystack()
  * 
  * @param: x:
  **/
-mystack::mystackcopy(const mystack& x)
+mystack::mystack(const mystack& x)
 {
     // Step 1
     stk_capacity = x.stk_capacity;
@@ -61,12 +60,13 @@ mystack::mystackcopy(const mystack& x)
  *
  * @brief: Destroy the mystack object
  *
- **/
-mystack::~mystack()
+ */
+/*
+*mystack::~mystack()
 {
     delete[]//place name of 
 }
-
+*/
 
 /**
  * Method: mystack& operator=(const mystack&);
@@ -77,11 +77,12 @@ mystack::~mystack()
  *
  * @return: mystack& 
  **/
+/*
 mystack& mystack::operator=(const mystack&)
 {
 
 }
-
+*/
 
 /**
  * Method: size_t capacity() const;
@@ -90,11 +91,12 @@ mystack& mystack::operator=(const mystack&)
  *
  * @return: size_t 
  **/
+/*
 size_t mystack::capacity() const
 {
 
 }
-
+*/
 
 /**
  * Method: size_t size() const;
@@ -103,11 +105,12 @@ size_t mystack::capacity() const
  *
  * @return: size_t 
  **/
+/*
 size_t mystack::size() const
 {
 
 }
-
+*/
 
 /**
  * Method: bool empty() const;
@@ -117,11 +120,12 @@ size_t mystack::size() const
  * @return true 
  * @return false 
  **/
+/*
 bool mystack::empty() const
 {
 
 }
-
+*/
 
 /**
  * Method: void clear();
@@ -129,11 +133,12 @@ bool mystack::empty() const
  * @brief: 
  *
  **/
+/*
 void mystack::clear()
 {
 
 }
-
+*/
 
 /**
  * Method: void reserve(ssize_t);
@@ -142,11 +147,12 @@ void mystack::clear()
  *
  * @param: size_t
  **/
+/*
 void mystack::reserve(size_t)
 {
 
 }
-
+*/
 
 /**
  * Method: const char& top() const;
@@ -155,11 +161,12 @@ void mystack::reserve(size_t)
  *
  * @return: const char&
  **/
+/*
 const char& mystack::top() const
 {
     return stk_array[stk_size - 1];
 }
-
+*/
 
 /**
  * Method: void pop();
@@ -167,7 +174,9 @@ const char& mystack::top() const
  * @brief: 
  *
  **/
+/*
 void mystack::pop()
 {
     stk_size = stk_size - 1;
 }
+*/
