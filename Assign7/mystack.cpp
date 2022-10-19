@@ -155,12 +155,12 @@ void mystack::clear()
  *
  * @param: size_t
  **/
-void mystack::reserve(size_t)
+void mystack::reserve(size_t n)
 {
     if (n > stk_capacity)
     {
         stk_capacity = n;
-        int * tempPtr;
+        int * temp_ptr;//Probably will have to change the pointer "*" to be on the side of int or the variable
         /*
         in the steps, it said:
         If the stack capacity is 0, 
@@ -177,14 +177,16 @@ void mystack::reserve(size_t)
         */
         if (stk_capacity != 0)
         {
-            tempPtr = new int[n];
+            temp_ptr = new int[n];
     
             for(unsigned int i = 0; i < stk_size; i++)
-            tempPtr[i] = stk_array[i];
+            {
+                temp_ptr[i] = stk_array[i];
+            }
     
             stk_capacity = n;
             delete[] stk_array;
-            stk_array = tempPtr;
+            stk_array = temp_ptr;
     
         }
 
@@ -218,17 +220,17 @@ const char& mystack::top() const
 void mystack::push(char value)
 {
     if (stk_size == stk_capacity)
-   {
-      if (stk_capacity == 0)
-      {
-        reserve(1);
-      }
+    {
+        if (stk_capacity == 0)
+        {
+            reserve(1);
+        }
     
-      else
-      {
-        reserve (stk_capacity * 2); 
-      }
-   }
+        else
+        {
+            reserve(stk_capacity * 2); 
+        }
+    }
    
    stk_array[stk_size] = value;
    stk_size++;
