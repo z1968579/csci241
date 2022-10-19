@@ -76,9 +76,23 @@ mystack::~mystack()
  *
  * @return: mystack& 
  **/
-mystack& mystack::operator=(const mystack&)
+mystack& mystack::operator=(const mystack& x)//might need to be something other than x
 {
-    return *this;
+     if (stk_array != x.stk_array)
+   {
+      stk_capacity = other.stkCap;
+      stk_size = x.stk_size;
+   
+      if (stk_capacity == 0)
+         stk_array = nullptr;
+      else
+         stk_array = new int[stk_capacity];
+      
+      for (unsigned int i = 0; i < stk_size; i++)
+         stk_array[i] = x.stk_array[i];
+   }
+      
+   return *this;
 }
 
 
@@ -118,7 +132,7 @@ size_t mystack::size() const
  **/
 bool mystack::empty() const
 {
-    return (stk_size == 0);
+    return (stk_size == 0)? true : false;
 }
 
 
@@ -143,7 +157,43 @@ void mystack::clear()
  **/
 void mystack::reserve(size_t)
 {
+    if (n > stk_capacity)
+    {
+        stk_capacity = n;
+        int * tempPtr;
+        /*
+        in the steps, it said:
+        If the stack capacity is 0, 
+        set the temporary array pointer to nullptr.
+    
+        this comes after:
+        Set the stack capacity to n.
+    
+        the only case where stkCap will = 0 after being set to n
+        is when stkCap was originally less than zero, which is not
+        possible for size_t or unsigned int...
+    
+        The code is added in anyways with an if statement
+        */
+        if (stk_capacity != 0)
+        {
+            tempPtr = new int[n];
+    
+            for(unsigned int i = 0; i < stk_size; i++)
+            tempPtr[i] = stk_array[i];
+    
+            stk_capacity = n;
+            delete[] stk_array;
+            stk_array = tempPtr;
+    
+        }
 
+        else
+        {
+            stk_array = nullptr; 
+        }
+        
+    }
 }
 
 
@@ -167,7 +217,21 @@ const char& mystack::top() const
  */
 void mystack::push(char value)
 {
-
+    if (stk_size == stk_capacity)
+   {
+      if (stk_capacity == 0)
+      {
+        reserve(1);
+      }
+    
+      else
+      {
+        reserve (stk_capacity * 2); 
+      }
+   }
+   
+   stk_array[stk_size] = value;
+   stk_size++;
 }
 
 /**
