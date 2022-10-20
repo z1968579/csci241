@@ -80,13 +80,13 @@ mystack& mystack::operator=(const mystack& x)//might need to be something other 
 {
      if (stk_array != x.stk_array)
    {
-      stk_capacity = other.stkCap;
+      stk_capacity = x.stk_capacity;
       stk_size = x.stk_size;
    
       if (stk_capacity == 0)
          stk_array = nullptr;
       else
-         stk_array = new int[stk_capacity];
+         stk_array = new char [stk_capacity];
       
       for (unsigned int i = 0; i < stk_size; i++)
          stk_array[i] = x.stk_array[i];
@@ -160,7 +160,7 @@ void mystack::reserve(size_t n)
     if (n > stk_capacity)
     {
         stk_capacity = n;
-        int * temp_ptr;//Probably will have to change the pointer "*" to be on the side of int or the variable
+        char * temp_ptr;//Probably will have to change the pointer "*" to be on the side of int or the variable
         /*
         in the steps, it said:
         If the stack capacity is 0, 
@@ -177,7 +177,7 @@ void mystack::reserve(size_t n)
         */
         if (stk_capacity != 0)
         {
-            temp_ptr = new int[n];
+            temp_ptr = new char[n];
     
             for(unsigned int i = 0; i < stk_size; i++)
             {

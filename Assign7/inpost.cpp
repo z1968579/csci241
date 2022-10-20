@@ -21,14 +21,27 @@ string convert(const string& infix)
     string postfix;
     mystack s;
     int i = 0;
-    while(infix[i] != '\0')
+    while(i < (const char) infix.length())
     {
         // if operand add to the postfix expression
         if((infix[i] >= 'a' && infix[i] <= 'z') || (infix[i] >= 'A' && infix[i] <= 'Z'))          
         {
             postfix += infix[i];
+            postfix += ' ';
             i++;
         }
+        
+        else if(isdigit(infix[i] == 0))
+        {
+            postfix += infix[i];
+            postfix += ' ';
+            i++;
+        }
+        else if(infix[i] == ' ')
+        {
+            i++;
+        }
+        
         // if opening bracket then push the stack
         else if(infix[i] == '(')
         {
@@ -42,6 +55,7 @@ string convert(const string& infix)
             while(s.top() != '(')
             {
                 postfix += s.top();
+                postfix += ' ';
                 s.pop();
             }
             s.pop();
@@ -49,11 +63,17 @@ string convert(const string& infix)
         }
         else            
         {
-            while (!s.empty() && precedence(infix[i]) <= precedence(s.top()))
+            
+            if ((s.empty() == false))
             {
-                postfix += s.top();
-                s.pop();
+                while(precedence(infix[i]) <= precedence(s.top()))
+                {
+                    postfix += s.top();
+                    postfix += ' ';
+                    s.pop();
+                }
             }
+            
             s.push(infix[i]);
             i++;
         }
@@ -61,8 +81,10 @@ string convert(const string& infix)
     while(!s.empty())
     {
         postfix += s.top();
+        postfix += ' ';
         s.pop();
     }
+    postfix.pop_back();
     return postfix;
 }
 
