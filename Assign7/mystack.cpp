@@ -19,7 +19,7 @@ using std::endl;
 /**
  * Method: mystack();
  *
- * @brief: Default Constructor; constructs a new mystack object
+ * @brief: Default Constructor; Initializes a new mystack object to an empty stack.
  *
  **/
 mystack::mystack()
@@ -33,23 +33,24 @@ mystack::mystack()
 /**
  * Method: mystackcopy(const mystack&);
  *
- * @brief: Construct a new mystackcopy object
+ * @brief: Copy constructor; Initializes a new mystack object to the same values for 
+ *         all of its data members as the existing mystack object x.
  * 
- * @param: x:
+ * @param x: Is a reference to a constant mystack object
  **/
 mystack::mystack(const mystack& x)
 {
-    // Step 1
+    //Copying over the object x's capcity and size values
     stk_capacity = x.stk_capacity;
     stk_size = x.stk_size;
 
-    // Step 2
+    //Checking if there is any dynamic storage for x object
     if (stk_capacity > 0)
-        stk_array = new char[stk_capacity];//Not sure if an int is fine here or need to change it to the char* type
+        stk_array = new char[stk_capacity];
     else
         stk_array = nullptr;
 
-    // Step 3
+    //Copying the contents of the x object's storage to the new object
     for (size_t i = 0; i < stk_size; i++)
         stk_array[i] = x.stk_array[i];
 }
@@ -58,36 +59,39 @@ mystack::mystack(const mystack& x)
 /**
  * Method: ~mystack();
  *
- * @brief: Destroy the mystack object
+ * @brief: The destructor; Deletes the stack array.
  *
- */
+ **/
 mystack::~mystack()
 {
-    delete[] stk_array;//place name of 
+    delete[] stk_array;
 }
 
 
 /**
  * Method: mystack& operator=(const mystack&);
  *
- * @brief: 
+ * @brief: An overloaded copy assignment operator that assigns one mystack object to another.
  *
- * @param mystack&
+ * @param s: Is a reference to a constant mystack object
  *
- * @return: mystack& 
+ * @return *this
  **/
 mystack& mystack::operator=(const mystack& s)
 {
      if (stk_array != s.stk_array)
    {
+    //Copying over the object s's capcity and size values
       stk_capacity = s.stk_capacity;
       stk_size = s.stk_size;
-   
+
+   //Checking if there is any dynamic storage for s object
       if (stk_capacity == 0)
          stk_array = nullptr;
       else
          stk_array = new char [stk_capacity];
-      
+
+   //Copying the contents of the s object's storage to the new object
       for (unsigned int i = 0; i < stk_size; i++)
          stk_array[i] = s.stk_array[i];
    }
@@ -99,9 +103,9 @@ mystack& mystack::operator=(const mystack& s)
 /**
  * Method: size_t capacity() const;
  *
- * @brief: 
+ * @brief: This conmstant member function returns the stack capacity.
  *
- * @return: size_t 
+ * @return stk_capacity: A size_t data member of the mystack class that holds the capacity of the stack 
  **/
 size_t mystack::capacity() const
 {
@@ -112,9 +116,9 @@ size_t mystack::capacity() const
 /**
  * Method: size_t size() const;
  *
- * @brief: 
+ * @brief: This constant member function returns the stack size.
  *
- * @return: size_t 
+ * @return stk_size: A size_t data member of the mystack class that holds the size of the stack 
  **/
 size_t mystack::size() const
 {
@@ -125,10 +129,10 @@ size_t mystack::size() const
 /**
  * Method: bool empty() const;
  *
- * @brief: 
+ * @brief: This constant member function returns true if the stack size is 0. Otherwise, it returns false.
  *
- * @return true 
- * @return false 
+ * @return true: A boolean value representing true
+ * @return false: A boolean value representing false
  **/
 bool mystack::empty() const
 {
@@ -139,7 +143,7 @@ bool mystack::empty() const
 /**
  * Method: void clear();
  *
- * @brief: 
+ * @brief: This member function should set the stack size back to 0. 
  *
  **/
 void mystack::clear()
@@ -151,30 +155,22 @@ void mystack::clear()
 /**
  * Method: void reserve(ssize_t);
  *
- * @brief: 
+ * @brief: This member function modifies an object's stack capacity without 
+ *         changing the stack size or the contents of the stack array.
  *
- * @param: size_t
+ * @param n: A size_t integer representing the stk_size data member of the mystack class
  **/
 void mystack::reserve(size_t n)
 {
     if (n > stk_capacity)
     {
+        //Set the stack capacity to n.
         stk_capacity = n;
-        char * temp_ptr;//Probably will have to change the pointer "*" to be on the side of int or the variable
-        /*
-        in the steps, it said:
-        If the stack capacity is 0, 
-        set the temporary array pointer to nullptr.
-    
-        this comes after:
-        Set the stack capacity to n.
-    
-        the only case where stkCap will = 0 after being set to n
-        is when stkCap was originally less than zero, which is not
-        possible for size_t or unsigned int...
-    
-        The code is added in anyways with an if statement
-        */
+
+        //Declare a temporary array pointer (a pointer to an char).
+        char * temp_ptr;
+        
+        //Copy the contents of the stack array into the temporary array.
         if (stk_capacity != 0)
         {
             temp_ptr = new char[n];
@@ -183,10 +179,10 @@ void mystack::reserve(size_t n)
             {
                 temp_ptr[i] = stk_array[i];
             }
-    
+
             stk_capacity = n;
-            delete[] stk_array;
-            stk_array = temp_ptr;
+            delete[] stk_array;//Delete the stack array.
+            stk_array = temp_ptr;//Set the stack array pointer to the temporary array pointer.
     
         }
 
@@ -202,9 +198,10 @@ void mystack::reserve(size_t n)
 /**
  * Method: const char& top() const;
  *
- * @brief: 
+ * @brief: This constant member function returns the top item in the stack.
  *
- * @return: const char&
+ * @return stk_array[stk_size - 1]: A char pointer data member of the mystack class that points 
+ *         to the top of the stack
  **/
 const char& mystack::top() const
 {
@@ -212,34 +209,36 @@ const char& mystack::top() const
 }
 
 /**
- * @brief 
+ * Method: void push(char);
+ *
+ * @brief: This member function pushes the character value onto the top of the stack.
  * 
- * @param value 
+ * @param value: A char variable that holds a single character to be put on top of the stack
  *   
- */
+ **/
 void mystack::push(char value)
 {
     if (stk_size == stk_capacity)
     {
         if (stk_capacity == 0)
         {
-            reserve(1);
+            reserve(1);//Increase stack capacity by 1
         }
     
         else
         {
-            reserve(stk_capacity * 2); 
+            reserve(stk_capacity * 2);//Double stack capacity
         }
     }
    
-   stk_array[stk_size] = value;
-   stk_size++;
+   stk_array[stk_size] = value;//Copy value into the stack array as the new top item in the stack.
+   stk_size++;//Increase the stack size by 1
 }
 
 /**
  * Method: void pop();
  *
- * @brief: 
+ * @brief: This member function pops the top item off of the stack by decreasing the stack size by 1
  *
  **/
 void mystack::pop()

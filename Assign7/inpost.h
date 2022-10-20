@@ -13,7 +13,7 @@ using std::string;
 
 //Prototypes
 string convert(const string&);
-//Optional Prototypes(pg 1 in PDF before second step)
+//Optional Prototypes
 bool isOperator(char);
 int precedence(char);
 

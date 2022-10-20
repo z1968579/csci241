@@ -15,7 +15,9 @@
 class mystack
 {
     private:
-        char* stk_array;//This is probably a wrong declaration for this data member; will affect other constructors and methods
+
+        //Data Members:
+        char* stk_array;
         size_t stk_capacity;
         size_t stk_size;
 
