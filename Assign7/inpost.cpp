@@ -31,13 +31,13 @@ string convert(const string& infix)
             i++;
         }
         
-        else if(isdigit(infix[i] == 0))
+        else if(isdigit(infix[i] == 0))// i dont think i did this write
         {
             postfix += infix[i];
             postfix += ' ';
             i++;
         }
-        else if(infix[i] == ' ')
+        else if(infix[i] == ' ')// i dont think i did this write
         {
             i++;
         }
@@ -64,7 +64,7 @@ string convert(const string& infix)
         else            
         {
             
-            if ((s.empty() == false))
+            if ((s.empty() == false)) // THIS STATMENT RUINS THIS PROGRAM. I FOLLOWD THE PSUEDOCODE AND IT WONT WORK. IT WILL SEG
             {
                 while(precedence(infix[i]) <= precedence(s.top()))
                 {
