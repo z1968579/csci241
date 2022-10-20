@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include <string>
+#include <bits/stdc++.h>
 #include "inpost.h"
 #include "mystack.h"// may not be needed to be included in this file
 
@@ -29,6 +30,15 @@ int main()
     while (getline(cin, infix))
     {
         cout << "  infix: " << infix << endl;
+        for (int i = 0; i < (int) infix.length(); i++)
+        {
+            if (infix[i] == ' ')
+            {
+                //using in-built function to erase element
+                infix.erase(infix.begin() + i);
+                i--;
+            }
+        }
         postfix = convert(infix);
         cout << "postfix: " << postfix << endl << endl;
     }

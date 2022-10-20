@@ -25,7 +25,9 @@ string convert(const string& infix)
     s.push('(');
 
     string postfix = "";
-    int len = infix.size();
+    int len = infix.length();
+
+
 
     for(int i = 0; i < len; i++)
     {
@@ -33,6 +35,7 @@ string convert(const string& infix)
         if(isalnum(inf))
         {
             postfix = postfix + inf;
+            postfix = postfix + ' ';
         }
         else if(inf =='(')
         {
@@ -43,6 +46,7 @@ string convert(const string& infix)
             while(s.top()!='(')
             {
                 postfix = postfix + s.top();
+                postfix = postfix + ' ';
                 s.pop();
             }
             s.pop();
@@ -55,6 +59,7 @@ string convert(const string& infix)
             while(p1 <= p2)
             {
                 postfix = postfix + s.top();
+                postfix = postfix + ' ';
                 s.pop();
                 p2 = precedence(s.top());
             }
@@ -65,82 +70,14 @@ string convert(const string& infix)
     while(s.top()!='(')
     {
         postfix = postfix + s.top();
-        s.pop();
-    }
-
-    return postfix;
-}
-
-    /*
-    int i = 0;
-    while(i < (const infix[i]ar) infix.length())
-    {
-        // if operand add to the postfix expression
-        if((infix[i] >= 'a' && infix[i] <= 'z') || (infix[i] >= 'A' && infix[i] <= 'Z'))          
-        {
-            postfix += infix[i];
-            postfix += ' ';
-            i++;
-        }
-        
-        else if(isdigit(infix[i] == 0))// i dont think i did this write
-        {
-            postfix += infix[i];
-            postfix += ' ';
-            i++;
-        }
-        else if(infix[i] == ' ')// i dont think i did this write
-        {
-            i++;
-        }
-        
-        // if opening bracket then push the stack
-        else if(infix[i] == '(')
-        {
-            s.push(infix[i]);
-            i++;
-        }
-        // if closing bracket encounted then keep popping from stack until 
-        // closing a pair opening bracket is not encountered
-        else if(infix[i] == ')')
-        {
-            while(s.top() != '(')
-            {
-                postfix += s.top();
-                postfix += ' ';
-                s.pop();
-            }
-            s.pop();
-            i++;
-        }
-        else            
-        {
-            
-            if ((s.empty() == false)) // THIS STATMENT RUINS THIS PROGRAM. I FOLLOWD THE PSUEDOCODE AND IT WONT WORK. IT WILL SEG
-            {
-                while(precedence(infix[i]) <= precedence(s.top()))
-                {
-                    postfix += s.top();
-                    postfix += ' ';
-                    s.pop();
-                }
-            }
-            
-            s.push(infix[i]);
-            i++;
-        }
-    }
-    while(!s.empty())
-    {
-        postfix += s.top();
-        postfix += ' ';
+        postfix = postfix + ' ';
         s.pop();
     }
     postfix.pop_back();
     return postfix;
-    
 }
-*/
+
+   
 /**
  * Method: bool isOperator(infix[i]ar operatr);
  * 
