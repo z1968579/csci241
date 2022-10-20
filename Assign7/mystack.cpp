@@ -76,12 +76,12 @@ mystack::~mystack()
  *
  * @return: mystack& 
  **/
-mystack& mystack::operator=(const mystack& x)//might need to be something other than x
+mystack& mystack::operator=(const mystack& s)
 {
-     if (stk_array != x.stk_array)
+     if (stk_array != s.stk_array)
    {
-      stk_capacity = x.stk_capacity;
-      stk_size = x.stk_size;
+      stk_capacity = s.stk_capacity;
+      stk_size = s.stk_size;
    
       if (stk_capacity == 0)
          stk_array = nullptr;
@@ -89,7 +89,7 @@ mystack& mystack::operator=(const mystack& x)//might need to be something other 
          stk_array = new char [stk_capacity];
       
       for (unsigned int i = 0; i < stk_size; i++)
-         stk_array[i] = x.stk_array[i];
+         stk_array[i] = s.stk_array[i];
    }
       
    return *this;

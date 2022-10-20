@@ -16,12 +16,64 @@ using std::cout;
 using std::string;
 using std::endl;
 
+
 string convert(const string& infix)
 {
-    string postfix;
+
     mystack s;
+    s.reserve(10);
+    s.push('(');
+
+    string postfix = "";
+    int len = infix.size();
+
+    for(int i = 0; i < len; i++)
+    {
+        char inf = infix[i];
+        if(isalnum(inf))
+        {
+            postfix = postfix + inf;
+        }
+        else if(inf =='(')
+        {
+            s.push('(');
+        }
+        else if(inf == ')')
+        {
+            while(s.top()!='(')
+            {
+                postfix = postfix + s.top();
+                s.pop();
+            }
+            s.pop();
+        }
+        else
+        {
+            int p1 = precedence(inf);
+            int p2 = precedence(s.top());
+
+            while(p1 <= p2)
+            {
+                postfix = postfix + s.top();
+                s.pop();
+                p2 = precedence(s.top());
+            }
+            s.push(inf);
+        }
+    }
+
+    while(s.top()!='(')
+    {
+        postfix = postfix + s.top();
+        s.pop();
+    }
+
+    return postfix;
+}
+
+    /*
     int i = 0;
-    while(i < (const char) infix.length())
+    while(i < (const infix[i]ar) infix.length())
     {
         // if operand add to the postfix expression
         if((infix[i] >= 'a' && infix[i] <= 'z') || (infix[i] >= 'A' && infix[i] <= 'Z'))          
@@ -86,10 +138,11 @@ string convert(const string& infix)
     }
     postfix.pop_back();
     return postfix;
+    
 }
-
+*/
 /**
- * Method: bool isOperator(char operatr);
+ * Method: bool isOperator(infix[i]ar operatr);
  * 
  * @brief: 
  * 
@@ -111,12 +164,13 @@ bool isOperator(char operatr)
 }
 
 /**
- * Method: int precedence(char operatr);
+ * Method: int precedence(infix[i]ar operatr);
  * 
  * @brief: 
  * 
  * @return int 
  **/
+/*
 int precedence(char operatr)
 {
     int operatr_amount;
@@ -139,4 +193,26 @@ int precedence(char operatr)
     }
 
     return operatr_amount;
+}*/
+int precedence(char x)
+{
+   switch(x)
+   {
+       case '(':
+           return 0;
+
+       case '+':
+       case '-':
+           return 1;
+
+       case '*':
+       case '/':
+           return 2;
+
+       case '^':
+case '~':
+           return 3;
+
+       default : return 999;
+   }
 }
