@@ -77,15 +77,14 @@ mystack::~mystack()
  *
  * @return *this
  **/
-mystack& mystack::operator=(const mystack& s)
+mystack& mystack::operator=(const mystack& x)//might need to be something other than x
 {
-     if (stk_array != s.stk_array)
+     if (stk_array != x.stk_array)
    {
-    //Copying over the object s's capcity and size values
-      stk_capacity = s.stk_capacity;
-      stk_size = s.stk_size;
 
-   //Checking if there is any dynamic storage for s object
+      stk_capacity = x.stk_capacity;
+      stk_size = x.stk_size;
+   
       if (stk_capacity == 0)
          stk_array = nullptr;
       else
@@ -93,7 +92,7 @@ mystack& mystack::operator=(const mystack& s)
 
    //Copying the contents of the s object's storage to the new object
       for (unsigned int i = 0; i < stk_size; i++)
-         stk_array[i] = s.stk_array[i];
+         stk_array[i] = x.stk_array[i];
    }
       
    return *this;

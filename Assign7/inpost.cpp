@@ -16,70 +16,72 @@ using std::cout;
 using std::string;
 using std::endl;
 
-
 string convert(const string& infix)
 {
-
+    string postfix;
     mystack s;
-    s.reserve(10);
-    s.push('(');
-
-    string postfix = "";
-    int len = infix.length();
-
-
-
-    for(int i = 0; i < len; i++)
+    size_t i = 0;
+    while(i < infix.length())
     {
-        char inf = infix[i];
-        if(isalnum(inf))
+        if((infix[i] >= 'a' && infix[i] <= 'z'))          
         {
-            postfix = postfix + inf;
-            postfix = postfix + ' ';
+            postfix += infix[i];
+            postfix += ' ';
+            i++;
         }
-        else if(inf =='(')
+        else if(isdigit(infix[i]))
         {
-            s.push('(');
-        }
-        else if(inf == ')')
-        {
-            while(s.top()!='(')
+            postfix += infix[i];
+            i++; 
+            if(infix[i] == ' ' or !isdigit(infix[i]))
             {
-                postfix = postfix + s.top();
-                postfix = postfix + ' ';
+                postfix += " ";
+            }
+        }
+        else if(infix[i] == ' ')
+        {
+            i++;
+        }
+        else if(infix[i] == '(')
+        {
+            s.push(infix[i]);
+            i++;
+        }
+        else if(infix[i] == ')')
+        {
+            while(s.top() != '(')
+            {
+                postfix += s.top();
+                postfix += ' ';
                 s.pop();
             }
             s.pop();
+            i++;
         }
-        else
+        else if(isOperator(infix[i]))        
         {
-            int p1 = precedence(inf);
-            int p2 = precedence(s.top());
-
-            while(p1 <= p2)
+            while(!s.empty() && precedence(infix[i]) <= precedence(s.top()))
             {
-                postfix = postfix + s.top();
-                postfix = postfix + ' ';
+                postfix += s.top();
+                postfix += ' ';
                 s.pop();
-                p2 = precedence(s.top());
             }
-            s.push(inf);
+            s.push(infix[i]);
+            i++;
         }
     }
-
-    while(s.top()!='(')
+    while(!s.empty())
     {
-        postfix = postfix + s.top();
-        postfix = postfix + ' ';
+        postfix += s.top();
+        postfix += ' ';
         s.pop();
     }
     postfix.pop_back();
     return postfix;
 }
 
-   
 /**
- * Method: bool isOperator(infix[i]ar operatr);
+ * Method: bool isOperator(char operatr);
  * 
  * @brief: 
  * 
@@ -101,13 +103,12 @@ bool isOperator(char operatr)
 }
 
 /**
- * Method: int precedence(infix[i]ar operatr);
+ * Method: int precedence(char operatr);
  * 
  * @brief: 
  * 
  * @return int 
  **/
-/*
 int precedence(char operatr)
 {
     int operatr_amount;
@@ -130,26 +131,4 @@ int precedence(char operatr)
     }
 
     return operatr_amount;
-}*/
-int precedence(char x)
-{
-   switch(x)
-   {
-       case '(':
-           return 0;
-
-       case '+':
-       case '-':
-           return 1;
-
-       case '*':
-       case '/':
-           return 2;
-
-       case '^':
-case '~':
-           return 3;
-
-       default : return 999;
-   }
 }
