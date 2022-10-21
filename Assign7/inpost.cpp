@@ -16,11 +16,24 @@ using std::cout;
 using std::string;
 using std::endl;
 
+/**
+ * Function: string convert(const string&);
+ * 
+ * @brief: This function converts the infix expression passed to it as a C++ string 
+ *         into an equivalent postfix expression stored in a string object.
+ * 
+ * @param infix: A string that may contain unnecessary whitespace and/or parentheses
+ *               that will be converted into a postfix string stored in a mystring object.
+ * 
+ * @return postfix: A string of constant characters 
+ **/
 string convert(const string& infix)
 {
+    //Variables:
     string postfix;
     mystack s;
     size_t i = 0;
+
     while(i < infix.length())
     {
         if((infix[i] >= 'a' && infix[i] <= 'z'))          
@@ -81,14 +94,14 @@ string convert(const string& infix)
 }
 
 /**
- * Method: bool isOperator(char operatr);
+ * Function: bool isOperator(char operatr);
  * 
- * @brief: 
+ * @brief: This function tests whether a character is an arithmetic operator or not.
  * 
- * @param operator
+ * @param operatr: A char variable that holds in the passed in operator symbol
  * 
- * @return true 
- * @return false 
+ * @return true: A boolean value representing true
+ * @return false: A boolean value representing false
  **/
 bool isOperator(char operatr)
 {
@@ -103,16 +116,19 @@ bool isOperator(char operatr)
 }
 
 /**
- * Method: int precedence(char operatr);
+ * Function: int precedence(char operatr);
  * 
- * @brief: 
+ * @brief: This function returns the precedence of an arithmetic operator, 
+ *         the higher the amount returned, the higher the precendence. 
  * 
- * @return int 
+ * @return operatr_amount: An integer that holds a value based on the passed in operator symbol
  **/
 int precedence(char operatr)
 {
+    //Variable(s)
     int operatr_amount;
-
+    
+    //The higher the precendence of the operator the higher the returned amount
     if(operatr == '~' || operatr == '^')
     {
         operatr_amount = 20;
