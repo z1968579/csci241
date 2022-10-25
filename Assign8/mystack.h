@@ -52,7 +52,7 @@ class mystack
         const int& top() const;
         void push(int);
         void pop();
-        void clone(const &);
+        void clone(const mystack&);
 };
 
 #endif
