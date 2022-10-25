@@ -180,7 +180,7 @@ void mystack::pop()
     stk_size--;
 }
 
-void mystack::clone(const & x)
+void mystack::clone(const mystack& x)
 {
     node* new_node;
     node* last = nullptr;

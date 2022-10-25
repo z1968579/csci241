@@ -45,6 +45,7 @@ int extra(int left, char op, int right)
 
 int evaluate(const string& postfix)
 {
+    /*
     // Create a stack of capacity equal to expression size
     mystack s;
     int i;
@@ -91,6 +92,7 @@ int evaluate(const string& postfix)
             }
         }
     }
-    return pop(stack);
+    return pop(stack);*/
+    return 0;
 }
  
