@@ -12,12 +12,25 @@
 #include <iomanip>
 #include <cstdlib>
 
+
+struct node
+{
+    node* next;
+    int value;
+    
+    node(int value, node* next = nullptr)
+    {
+        this->value = value;
+        this->next = next
+    }
+};
+
 class mystack
 {
     private:
 
         //Data Members:
-        NODE *stk_top;//May or may not be correctly declared
+        node* stk_top;
         size_t stk_size;
 
 

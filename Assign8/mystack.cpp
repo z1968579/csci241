@@ -44,7 +44,7 @@ mystack::mystack(const mystack& x)
 
     //Checking if there is any dynamic storage for x object
     if (stk_size == 0)
-        stk_top = new NODE[stk_size];
+        stk_top = new node[stk_size];
     else
         stk_top = nullptr;
 
