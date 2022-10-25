@@ -21,7 +21,7 @@ struct node
     node(int value, node* next = nullptr)
     {
         this->value = value;
-        this->next = next
+        this->next = next;
     }
 };
 
