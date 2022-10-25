@@ -46,14 +46,13 @@ class mystack
 
         //Other Methods
         mystack& operator=(const mystack&);
-        size_t capacity() const;
         size_t size() const;
         bool empty() const;
         void clear();
-        void reserve(size_t);
-        const char& top() const;
-        void push(char);
+        const int& top() const;
+        void push(int);
         void pop();
+        void clone(const &);
 };
 
 #endif

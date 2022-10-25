@@ -39,18 +39,11 @@ mystack::mystack()
  **/
 mystack::mystack(const mystack& x)
 {
-    //Copying over the object x's size values
-    stk_size = x.stk_size;
+  stk_top = nullptr;
 
-    //Checking if there is any dynamic storage for x object
-    if (stk_size == 0)
-        stk_top = new node[stk_size];
-    else
-        stk_top = nullptr;
+  stk_size = x.stk_size;
 
-    //Copying the contents of the x object's storage to the new object
-    for (size_t i = 0; i < stk_size; i++)
-        stk_top[i] = x.stk_top[i];
+  clone(x);
 }
 
 
@@ -71,29 +64,25 @@ mystack::~mystack()
  *
  * @brief: An overloaded copy assignment operator that assigns one mystack object to another.
  *
- * @param s: Is a reference to a constant mystack object
+ * @param x: Is a reference to a constant mystack object
  *
  * @return *this
  **/
-mystack& mystack::operator=(const mystack& x)//might need to be something other than x
+mystack& mystack::operator=(const mystack& x)
 {
-     if (stk_top != x.stk_top)
-   {
+    if(this != &x)
+    {
+        // Make the left stack object empty
+        clear();
+        
+        // Copy the other stack's size
+        stk_size = x.stk_size;
 
-      stk_size = x.stk_size;
-      stk_size = x.stk_size;
-   
-      if (stk_size == 0)
-         stk_top = nullptr;
-      else
-         stk_top = new char [stk_size];
-
-   //Copying the contents of the s object's storage to the new object
-      for (unsigned int i = 0; i < stk_size; i++)
-         stk_top[i] = x.stk_top[i];
-   }
-      
-   return *this;
+        // Copy the other stack's linked list
+        clone(x);
+    }
+        
+    return *this;
 }
 
 
@@ -103,11 +92,7 @@ mystack& mystack::operator=(const mystack& x)//might need to be something other 
  * @brief: This conmstant member function returns the stack capacity.
  *
  * @return stk_size: A size_t data member of the mystack class that holds the capacity of the stack 
- **/
-size_t mystack::capacity() const
-{
-    return stk_size;
-}
+ **{}*/
 
 
 /**
@@ -145,6 +130,11 @@ bool mystack::empty() const
  **/
 void mystack::clear()
 {
+    while(stk_size != 0)
+    {
+        pop();
+    }
+
     stk_size = 0;
 }
 
@@ -156,40 +146,7 @@ void mystack::clear()
  *         changing the stack size or the contents of the stack array.
  *
  * @param n: A size_t integer representing the stk_size data member of the mystack class
- **/
-void mystack::reserve(size_t n)
-{
-    if (n > stk_size)
-    {
-        //Set the stack capacity to n.
-        stk_size = n;
-
-        //Declare a temporary array pointer (a pointer to an char).
-        char * temp_ptr;
-        
-        //Copy the contents of the stack array into the temporary array.
-        if (stk_size != 0)
-        {
-            temp_ptr = new char[n];
-    
-            for(unsigned int i = 0; i < stk_size; i++)
-            {
-                temp_ptr[i] = stk_top[i];
-            }
-
-            stk_size = n;
-            delete[] stk_top;//Delete the stack array.
-            stk_top = temp_ptr;//Set the stack array pointer to the temporary array pointer.
-    
-        }
-
-        else
-        {
-            stk_top = nullptr; 
-        }
-        
-    }
-}
+ **{}*/
 
 
 /**
@@ -200,7 +157,7 @@ void mystack::reserve(size_t n)
  * @return stk_top[stk_size - 1]: A char pointer data member of the mystack class that points 
  *         to the top of the stack
  **/
-const char& mystack::top() const
+const int& mystack::top() const
 {
     return stk_top[stk_size - 1];
 }
@@ -213,23 +170,14 @@ const char& mystack::top() const
  * @param value: A char variable that holds a single character to be put on top of the stack
  *   
  **/
-void mystack::push(char value)
+void mystack::push(int value)
 {
-    if (stk_size == stk_size)
-    {
-        if (stk_size == 0)
-        {
-            reserve(1);//Increase stack capacity by 1
-        }
+    node* new_node->value = value;
+    node* new_node->next = stk_top;
     
-        else
-        {
-            reserve(stk_size * 2);//Double stack capacity
-        }
-    }
-   
-   stk_top[stk_size] = value;//Copy value into the stack array as the new top item in the stack.
-   stk_size++;//Increase the stack size by 1
+    stk_top = new_node;
+    
+    stk_size++;
 }
 
 /**
@@ -240,5 +188,33 @@ void mystack::push(char value)
  **/
 void mystack::pop()
 {
+    node* delete_node = stk_top;
+    stk_top = stk_top->next;
+    
+    delete delete_node;
+    
     stk_size--;
+}
+
+void mystack::clone(const & x)
+{
+    node* last = nullptr;
+    node* ptr = x.stk_top;
+        
+    while ptr != nullptr
+    {
+        new_node->value = ptr->value;
+            
+        if(last == nullptr)
+        {
+            stk_top = new_node;
+        }
+        else
+        {
+            last->next = new_node;
+        }
+            
+        last = new_node;
+        ptr = ptr->next;
+    }
 }
