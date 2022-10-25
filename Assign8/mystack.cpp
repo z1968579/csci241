@@ -55,7 +55,7 @@ mystack::mystack(const mystack& x)
  **/
 mystack::~mystack()
 {
-    delete[] stk_top;
+    clear();
 }
 
 
@@ -84,15 +84,6 @@ mystack& mystack::operator=(const mystack& x)
         
     return *this;
 }
-
-
-/**
- * Method: size_t capacity() const;
- *
- * @brief: This conmstant member function returns the stack capacity.
- *
- * @return stk_size: A size_t data member of the mystack class that holds the capacity of the stack 
- **{}*/
 
 
 /**
@@ -133,20 +124,13 @@ void mystack::clear()
     while(stk_size != 0)
     {
         pop();
+
+        stk_size--;
     }
 
-    stk_size = 0;
+    //stk_size = 0;//Not sure if we need this
+    //stk_size = nullptr;//Notsure if we need this either
 }
-
-
-/**
- * Method: void reserve(ssize_t);
- *
- * @brief: This member function modifies an object's stack capacity without 
- *         changing the stack size or the contents of the stack array.
- *
- * @param n: A size_t integer representing the stk_size data member of the mystack class
- **{}*/
 
 
 /**
@@ -159,7 +143,7 @@ void mystack::clear()
  **/
 const int& mystack::top() const
 {
-    return stk_top[stk_size - 1];
+    return stk_top->value;
 }
 
 /**
@@ -172,8 +156,7 @@ const int& mystack::top() const
  **/
 void mystack::push(int value)
 {
-    node* new_node->value = value;
-    node* new_node->next = stk_top;
+    node* new_node = new node(value, stk_top);
     
     stk_top = new_node;
     
@@ -189,6 +172,7 @@ void mystack::push(int value)
 void mystack::pop()
 {
     node* delete_node = stk_top;
+
     stk_top = stk_top->next;
     
     delete delete_node;
@@ -198,12 +182,13 @@ void mystack::pop()
 
 void mystack::clone(const & x)
 {
+    node* new_node;
     node* last = nullptr;
     node* ptr = x.stk_top;
         
     while ptr != nullptr
     {
-        new_node->value = ptr->value;
+        node* new_node->value = ptr->value;
             
         if(last == nullptr)
         {
