@@ -7,7 +7,7 @@
 
 using std::string;
 
-int evaluate(const string& postfix);
+int evaluate(const string&);
 
 int operation(int, char, int);
 
