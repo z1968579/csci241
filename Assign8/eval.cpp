@@ -4,7 +4,7 @@
 #include <cmath>
 #include <sstream>
 #include <iterator>
-//#include "inpost.h"
+#include "inpost.h"
 #include "mystack.h"
 #include "eval.h"
 
@@ -66,6 +66,9 @@ int evaluate(const string& postfix)
         {
             stringstream nn(op);
             nn >> num;
+            s.push(num);
+            cout <<"The integer literal is " << num << endl;
+        
             //cout << op << " is an integer literal" << endl;
         }
         else if((op[0] >= 'a' && op[0] <= 'z'))
