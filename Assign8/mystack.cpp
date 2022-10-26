@@ -186,9 +186,9 @@ void mystack::clone(const mystack& x)
     node* last = nullptr;
     node* ptr = x.stk_top;
         
-    while ptr != nullptr
+    while(ptr != nullptr)
     {
-        node* new_node->value = ptr->value;
+        new_node = new node(ptr->value);
             
         if(last == nullptr)
         {
