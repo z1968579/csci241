@@ -7,17 +7,17 @@
  * @date 10-27-2022
  */
 
-#include <iostream>
-#include <stdexcept>
-#include <iomanip>
-#include <cstdlib>
+//#include <iostream>
+//#include <stdexcept>
+//#include <iomanip>
+//#include <cstdlib>
 
 
 struct node
 {
-    node* next;
     int value;
-    
+    node* next;
+
     node(int value, node* next = nullptr)
     {
         this->value = value;

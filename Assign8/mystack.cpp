@@ -121,15 +121,10 @@ bool mystack::empty() const
  **/
 void mystack::clear()
 {
-    while(stk_size != 0)
+    while(!empty())
     {
         pop();
-
-        stk_size--;
     }
-
-    //stk_size = 0;//Not sure if we need this
-    //stk_size = nullptr;//Notsure if we need this either
 }
 
 
@@ -157,10 +152,9 @@ const int& mystack::top() const
 void mystack::push(int value)
 {
     node* new_node = new node(value, stk_top);
-    
+
     stk_top = new_node;
-    
-    stk_size++;
+    stk_size = stk_size + 1;
 }
 
 /**
@@ -182,13 +176,14 @@ void mystack::pop()
 
 void mystack::clone(const mystack& x)
 {
-    node* new_node;
+    
+   // node* new_node;
     node* last = nullptr;
     node* ptr = x.stk_top;
         
     while(ptr != nullptr)
     {
-        new_node = new node(ptr->value);
+        node* new_node = new node(ptr->value);
             
         if(last == nullptr)
         {

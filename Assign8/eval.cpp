@@ -1,9 +1,9 @@
+
 #include <iostream>
 #include <string>
 #include <cctype>
-#include <cmath>
+#include <stack>
 #include <sstream>
-#include <iterator>
 #include "inpost.h"
 #include "mystack.h"
 #include "eval.h"
@@ -65,8 +65,10 @@ int evaluate(const string& postfix)
         if(isdigit(op[0]))
         {
             stringstream nn(op);
-            nn >> num;
-            s.push(num);
+            if(nn >> num) 
+            {
+                s.push(num);
+            }
             cout <<"The integer literal is " << num << endl;
         
             //cout << op << " is an integer literal" << endl;
@@ -122,7 +124,7 @@ int evaluate(const string& postfix)
     num = s.top();
     s.pop();
     return num;
-    */
+    
+   */
     return 0;
 }
- 
