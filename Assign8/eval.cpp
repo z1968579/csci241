@@ -4,14 +4,16 @@
 #include <cmath>
 #include <sstream>
 #include <iterator>
-#include "inpost.h"
+//#include "inpost.h"
 #include "mystack.h"
 #include "eval.h"
+
 
 using std::cin;
 using std::cout;
 using std::string;
 using std::endl;
+using std::stringstream;
 
 int operation(int left, char op, int right)
 {
@@ -50,8 +52,38 @@ int operation(int left, char op, int right)
 
 int evaluate(const string& postfix)
 {
-
     mystack s;
+    int num;
+    string op;
+    stringstream ss(postfix);     // Create a stringstream object from the postfix string.
+
+    // You can now read from the stringstream as if it were standard input. The end of the
+    // string will be treated as the end of input.
+    while (ss >> op)
+    {
+        // op is a C++ string containing the next operator/operand in the postfix expression.
+        if(isdigit(op[0]))
+        {
+            stringstream nn(op);
+            nn >> num;
+            //cout << op << " is an integer literal" << endl;
+        }
+        else if((op[0] >= 'a' && op[0] <= 'z'))
+        {
+            //cout << op << " is a variable" << endl;
+        }
+
+        else if(op[0] == '~')
+        {
+            //cout << op << " is unary negation" << endl;           
+        }
+        else
+        {
+            //cout << op << " is a binary operator" << endl;           
+        }
+    }
+
+    /*
     int num = 0, num1 = 0, num2 = 0;
 
     //string op;
@@ -87,6 +119,7 @@ int evaluate(const string& postfix)
     num = s.top();
     s.pop();
     return num;
-    //return 0;
+    */
+    return 0;
 }
  
