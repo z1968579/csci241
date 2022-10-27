@@ -1,7 +1,7 @@
 /**
  * @file mystack.cpp
  * @author Jacob Rudawski (z1968579) & Jacob Kurbis (z1945650)
- * @brief CSCI 241 Assignment 7
+ * @brief CSCI 241 Assignment 8
  * @date 10-27-22
  */
 
@@ -32,8 +32,8 @@ mystack::mystack()
 /**
  * Method: mystackcopy(const mystack&);
  *
- * @brief: Copy constructor; Initializes a new mystack object to the same values for 
- *         all of its data members as the existing mystack object x.
+ * @brief: Copy Constructor; For the mystack class should initialize a new
+ *         mystack object to the same string as the existing mystack object x.
  * 
  * @param x: Is a reference to a constant mystack object
  **/
@@ -50,7 +50,7 @@ mystack::mystack(const mystack& x)
 /**
  * Method: ~mystack();
  *
- * @brief: The destructor; Deletes the stack array.
+ * @brief: The destructor; Deletes the dynamic member of the mystack class when called
  *
  **/
 mystack::~mystack()
@@ -116,7 +116,7 @@ bool mystack::empty() const
 /**
  * Method: void clear();
  *
- * @brief: This member function should set the stack size back to 0. 
+ * @brief: This member function clears the stack size back to 0. 
  *
  **/
 void mystack::clear()
@@ -131,10 +131,10 @@ void mystack::clear()
 /**
  * Method: const char& top() const;
  *
- * @brief: This constant member function returns the top item in the stack.
+ * @brief: This member function returns the value in the top node of the stack.
  *
- * @return stk_top[stk_size - 1]: A char pointer data member of the mystack class that points 
- *         to the top of the stack
+ * @return stk_top->value: A node pointer data member of the mystack class that points 
+ *                         to the top value of the stack
  **/
 const int& mystack::top() const
 {
@@ -142,11 +142,11 @@ const int& mystack::top() const
 }
 
 /**
- * Method: void push(char);
+ * Method: void push(int);
  *
- * @brief: This member function pushes the character value onto the top of the stack.
+ * @brief: This member function pushes the integer value onto the top of the stack..
  * 
- * @param value: A char variable that holds a single character to be put on top of the stack
+ * @param value: An integer variable that holds a numeric value assigned to a node
  *   
  **/
 void mystack::push(int value)
@@ -160,7 +160,8 @@ void mystack::push(int value)
 /**
  * Method: void pop();
  *
- * @brief: This member function pops the top item off of the stack by decreasing the stack size by 1
+ * @brief: This member function pops the top item off 
+ *         of the stack and delete the node that contained it.
  *
  **/
 void mystack::pop()
@@ -174,10 +175,16 @@ void mystack::pop()
     stk_size--;
 }
 
+/**
+ * Method: void clone(const mystack&);
+ *
+ * @brief: Copies the linked list from the stack x to 'this' object.
+ *
+ * @param x: Is a reference to a constant mystack object
+ *
+ **/
 void mystack::clone(const mystack& x)
 {
-    
-   // node* new_node;
     node* last = nullptr;
     node* ptr = x.stk_top;
         

@@ -1,3 +1,10 @@
+/**
+ * @file eval.cpp
+ * @author Jacob Rudawski (z1968579) & Jacob Kurbis (z1945650)
+ * @brief CSCI 241 Assignment 8
+ * @date 10-27-22
+ */
+
 #include <iostream>
 #include <string>
 #include <cctype>
@@ -15,13 +22,16 @@ using std::endl;
 using std::stringstream;
 
 /**
- * @brief returns arithmitic from operator
+ * Function: int operation(int, char, int);
+ *
+ * @brief: The function should return an integer the result of the arithmetic operation.
  * 
- * @param left number
- * @param op operator
- * @param right number
- * @return int value of arithmitic
- */
+ * @param left: An integer that holds the left operand of the arithmetic operation
+ * @param op: A char variable that holds the arithmetic operator
+ * @param right: An integer that holds the right operand of the arithmetic operation
+ *
+ * @return result: An integer that holds the value of the arithmetic operator
+ **/
 int operation(int left, char op, int right)
 {
     int result;
@@ -54,6 +64,17 @@ int operation(int left, char op, int right)
     return result;
 }
 
+
+/**
+ * Function: int evaluate(const string&);
+ *
+ * @brief: This function evaluates the postfix expression passed to it
+ *         and returns the calculated value.
+ * 
+ * @param postfix: A reference to a constant string; the postfix expression
+ *
+ * @return num: An integer value that is the result of the postfix operand expression
+ **/
 int evaluate(const string& postfix)
 {
     mystack s;
@@ -64,6 +85,7 @@ int evaluate(const string& postfix)
 
     while (ss >> op)
     {
+        //Checks for integer operand
         if(isdigit(op[0]))
         {
             stringstream nn(op);
@@ -72,18 +94,21 @@ int evaluate(const string& postfix)
                 s.push(num);
             }
         }
+        //Checks for alphabetical operand
         else if((op[0] >= 'a' && op[0] <= 'z'))
         {
             var = op[0];
             num = var - 'a';
             s.push(num);
         }
+        //Checks for '~' operand
         else if(op[0] == '~')
         {
             num = s.top() * -1;
             s.pop();
             s.push(num);
         }
+        //Checks for any binary operators
         else
         {
             right = s.top();
@@ -98,3 +123,4 @@ int evaluate(const string& postfix)
     s.pop();
     return num;
 }
+
