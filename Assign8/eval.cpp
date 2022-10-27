@@ -33,7 +33,7 @@ int operation(int left, char op, int right)
         case '/':
             if(right == 0)
             {
-                std::cerr << "*** Division by 0 ***" << endl;
+                cout << "*** Division by 0 ***" << endl;
                 result = 0;
                 break;
             }
@@ -68,23 +68,18 @@ int evaluate(const string& postfix)
             {
                 s.push(num);
             }
-            cout <<"The integer literal is " << num << endl;
-        
-            //cout << op << " is an integer literal" << endl;
         }
         else if((op[0] >= 'a' && op[0] <= 'z'))
         {
             var = op[0];
             num = var - 'a';
             s.push(num); //might be op intead
-            cout << op[0] << " is equal to " << num << endl;
         }
         else if(op[0] == '~')
         {
             num = s.top() * -1;
             s.pop();
             s.push(num);
-            cout << "unary negation results in " << num << endl;           
         }
         else
         {
@@ -94,9 +89,11 @@ int evaluate(const string& postfix)
             s.pop();
             num = operation(left, op[0], right);
             s.push(num);
-            cout << left << " " << op[0] << " " << right << " = " << num << endl;           
         }
     }
+    num = s.top();
+    s.pop();
+    return num;
 
     /*
     int num = 0, num1 = 0, num2 = 0;
@@ -136,5 +133,5 @@ int evaluate(const string& postfix)
     return num;
     
    */
-    return 0;
+    //return 0;
 }
