@@ -2,6 +2,7 @@
 #include <iostream>
 #include <string>
 #include <cctype>
+#include <cmath>
 #include <stack>
 #include <sstream>
 #include "inpost.h"
@@ -30,19 +31,16 @@ int operation(int left, char op, int right)
             result = left * right;
             break;
         case '/':
-            if(right == 0 || left == 0)
+            if(right == 0)
             {
                 std::cerr << "*** Division by 0 ***" << endl;
-                exit(1);
+                result = 0;
+                break;
             }
             result = left / right;
             break;
         case '^':
-            while(right > 0)
-            {
-                result *= left;
-                right--;
-            }
+            result = pow(left, right);
             break;
         default:
             break;
@@ -53,7 +51,8 @@ int operation(int left, char op, int right)
 int evaluate(const string& postfix)
 {
     mystack s;
-    int num;
+    int num, left, right;
+    char var;
     string op;
     stringstream ss(postfix);     // Create a stringstream object from the postfix string.
 
@@ -75,16 +74,27 @@ int evaluate(const string& postfix)
         }
         else if((op[0] >= 'a' && op[0] <= 'z'))
         {
-            //cout << op << " is a variable" << endl;
+            var = op[0];
+            num = var - 'a';
+            s.push(num); //might be op intead
+            cout << op[0] << " is equal to " << num << endl;
         }
-
         else if(op[0] == '~')
         {
-            //cout << op << " is unary negation" << endl;           
+            num = s.top() * -1;
+            s.pop();
+            s.push(num);
+            cout << "unary negation results in " << num << endl;           
         }
         else
         {
-            //cout << op << " is a binary operator" << endl;           
+            right = s.top();
+            s.pop();
+            left = s.top();
+            s.pop();
+            num = operation(left, op[0], right);
+            s.push(num);
+            cout << left << " " << op[0] << " " << right << " = " << num << endl;           
         }
     }
 
