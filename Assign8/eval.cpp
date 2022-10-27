@@ -56,7 +56,11 @@ int operation(int left, char op, int right)
             result = left / right;
             break;
         case '^':
-            result = pow(left, right);
+            result = 1;
+            for (int i = 0; i < right; i++)
+            {
+                result *= left;
+            }
             break;
         default:
             break;
