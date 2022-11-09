@@ -26,17 +26,9 @@ using std::showpos;
  */
 simplesim::simplesim()
 {
-    //Initializing Simplesim's Registers
-    accumulator = 0;
-    instruction_counter = 0;
-    instruction_register = 0;
-    operation_code = 0;
-    operand = 0;
-
-    //Adding Simplesim's Memory
-    for(int i = 0; i < 100; i++)
+    for (int i = 0; i < 100; i++)
     {
-        memory[i] = {7777};
+        memory[i] = DEFAULT;
     }
 }
 
@@ -54,27 +46,23 @@ bool simplesim::load_program()
     while (cin >> instruction && instruction != -99999)
     {
         // Check for invalid word.
-        if(instruction <= -9999 || instruction >= 9999)
+        if (instruction < -9999 || instruction > 9999)
         {
-            cout << "*** ABEND: pgm load: invalid word *** " << endl;
+            cout << "*** ABEND: pgm load: invalid word ***\n\n";
             return false;
         }
 
         // Check for too large program.
-        if(count >= 100)
+        if (count > 99)
         {
-            cout << "*** ABEND: pgm load: pgm too large *** " << endl;
+            cout << "*** ABEND: pgm load: pgm too large ***\n\n";
             return false;
         }
-
         // Add instruction to memory.
         memory[count] = instruction;
-
         // Increment instruction count.
         count++;
 	}
-    
-
     return true;
 }
 
@@ -83,14 +71,17 @@ bool simplesim::load_program()
  */
 void simplesim::execute_program()
 {
+    int temp;
+
+    
     bool done = false;
 
     while (!done)
     {
         // Check for addressability error.
-        if(instruction_counter < 0 || instruction_counter > 99)
+        if(instruction_counter < 0 or instruction_counter > 99)
         {
-            cout << "*** ABEND: addressibility error *** " << endl;
+            cout << "*** ABEND: addressability error ***\n\n";
             return;
         }
 
@@ -98,243 +89,146 @@ void simplesim::execute_program()
         instruction_register = memory[instruction_counter];
 		operation_code = instruction_register / 100;
 		operand = instruction_register % 100;
-
 		
-       // Execute instruction.
+        // Execute instruction.
 		switch (operation_code)
 		{
-        //READ instruction
         case READ:
-
-            int read;
-            cin >> read;
-
-            //If the READ is too long or too short
-            if(read <= -9999 || read >= 9999)
+            cin >> temp;
+            if (temp >= -9999 and temp <= 9999)
             {
-                cout << "*** ABEND: illegal input ***" << endl;
+                memory[operand] = temp;
+            }
+            else
+            {
+                cout << "*** ABEND: illegal input ***\n\n";
                 return;
             }
 
-            //Print out the READ value
-            memory[operand] = read;
-            cout << "READ: " << internal << showpos << setfill('0') << setw(5) << read << noshowpos << setfill(' ') << endl;
-
+            cout << left << setw(6) << "READ:" << internal << setw(5) << showpos << setfill('0') << memory[operand] << setfill(' ') << endl;
             break;
-        
-        //WRITE instruction
+
         case WRITE:
-            
-            int write;
-
-            //Have WRITE be saved to Simplesim's memory at position operand and print out value
-            write = memory[operand];
-            cout << internal << showpos << setfill('0') << setw(5) << write << noshowpos << setfill(' ') << endl;
-
+            temp = memory[operand];
+            cout << internal << setw(5) << showpos << setfill('0')  << temp << setfill(' ')<< endl;
             break;
-        
 
-        //LOAD instruction
-        case LOAD:
-           
-            //Have the LOAD instruction load Simplesim's memory at position operand in the accumulator
-            accumulator = memory[operand];
-
-            break;
-        
-
-        //STORE instruction
         case STORE:
-            
-            //Have STORE instruction store the value of accumulator to Simplesim's memory at position operand
             memory[operand] = accumulator;
-
             break;
-        
-        
-        //ADD instruction
+
+        case LOAD:
+            accumulator = memory[operand];
+            break;
+
         case ADD:
-            
-            //Add the accumulator and Simplesim's memory at position operand
-            int sum;
-            sum = accumulator + memory[operand];
-
-            //If the sum is less than the mininum value, output underflow error
-            if(sum < -9999)
+            temp = accumulator + memory[operand] ;
+            if (temp <= -9999)
             {
-                cout << "*** ABEND: underflow ***" << endl;
+                cout << "*** ABEND: underflow ***\n\n";
+                accumulator--;
                 return;
             }
-
-            //If the sum is greater than the maximum value, output overflow error
-            if(sum > 9999)
+            else if (temp >= 9999)
             {
-                cout << "*** ABEND: overflow ***" << endl;
+                cout << "*** ABEND: overflow ***\n\n";
+                accumulator++;
                 return;
             }
-
-            //Have the sum be stored in the accumulator
-            accumulator = sum;
-
+            accumulator = temp;
             break;
-        
-        
-        //SUBTRACT instruction
+
         case SUBTRACT:
-            
-            //Subtract the accumulator and Simplesim's memory at position operand
-            int difference;
-            difference = accumulator - memory[operand];
-
-            //If the difference is less than the minimum value, output underflow error
-            if(difference < -9999)
+            temp = accumulator - memory[operand];
+            if (temp <= -9999)
             {
-                cout << "*** ABEND: underflow ***" << endl;
+                cout << "*** ABEND: underflow ***\n\n";
+                accumulator--;
                 return;
             }
-
-            //If the difference is greater than the maximum value, output overflow error
-            if(difference > 9999)
+            else if (temp >= 9999)
             {
-                cout << "*** ABEND: overflow ***" << endl;
+                cout << "*** ABEND: overflow ***\n\n";
+                accumulator++;
                 return;
             }
+            else
+            {
+                accumulator = temp;
+            }
+            break;   
 
-            //Have the difference be stored in the accumulator
-            accumulator = difference;
-            
-            break;
-        
-
-        //MULTIPLY instruction
         case MULTIPLY:
+            temp = memory[operand] * accumulator;
             
-            //Multiply the accumulator and Simplesim's memory at position operand
-            int product;
-            product = accumulator * memory[operand];
-
-            //If the product is less than the minimum value, output underflow error
-            if(product < -9999)
+            if (temp <= -9999)
             {
-                cout << "*** ABEND: underflow ***" << endl;
+                cout << "*** ABEND: underflow ***\n\n";
                 return;
             }
-
-            //If the product is greater than the maximum value, output overflow error
-            if(product > 9999)
+            else if (temp >= 9999)
             {
-                cout << "*** ABEND: overflow ***" << endl;
+                cout << "*** ABEND: overflow ***\n\n";
                 return;
             }
-            
-            //Have the product be stored in the accumulator
-            accumulator = product;
-            
+            else
+            {
+                accumulator = temp;
+            }
             break;
-        
 
-        //DIVIDE instruction
         case DIVIDE:
-            
-            //Checking the memory at psoition operand is equal to zero, if so, then output division by zero error
-            if(memory[operand] == 0)
+            if (memory[operand] == 0)
             {
-                cout << "*** ABEND: attempted division by 0 ***" << endl;
+                cout << "*** ABEND: attempted division by 0 ***\n\n";
                 return;
             }
-            
-            //Add the accumulator and Simplesim's memory at position operand
-            int quotient;
-            quotient = accumulator / memory[operand];
-
-            //If the quotient is less than the minimum value, output underflow error
-            if(quotient < -9999)
+            else
             {
-                cout << "*** ABEND: underflow ***" << endl;
-                return;
+                temp = accumulator/memory[operand] ;
             }
-
-            //If the quotient is greater than the maximum value, output overflow error
-            if(quotient > 9999)
-            {
-                cout << "*** ABEND: overflow ***" << endl;
-                return;
-            }
-
-            //Have the quoient be stored in the accumulator
-            accumulator = quotient;
-            
+            accumulator = temp;
             break;
 
-        
-        //BRANCH instruction
         case BRANCH:
-            
-            //Branching to a specific spot in memory
             instruction_counter = operand;
-            
             break;
-        
 
-        //BRANCHNEG instruction
-        case BRANCHNEG:
-            
-            //Branching to a specific spot in memory if the accumulator is less than 0
-            if( accumulator < 0)
-            {
-                instruction_counter = operand;
-            }
-
-            //Increment the instruction_counter if accumulator is not less than 0
-            else
-            {
-                instruction_counter++;
-            }
-            
-            break;
-        
-
-        //BRANCHZERO instruction
         case BRANCHZERO:
-            
-            //Branching to a specific spot in memory if the accumulator is equal to 0
-            if(accumulator == 0)
+            if (accumulator == 0)
             {
                 instruction_counter = operand;
             }
-
-            //Increment the instruction_counter if accumulator is not equal to 0
             else
-            {
                 instruction_counter++;
-            }
-            
             break;
-        
-        //HALT instruction
+
+        case BRANCHNEG:
+            if (accumulator < 0)
+            {
+                instruction_counter = operand;
+            }
+            else
+                instruction_counter++;
+            break;
+
         case HALT:
-            
             done = true;
             break;
-        
-        
-        //If no instructions were chosen
+
         default:
-            cout << "*** ABEND: invalid opcode ***\n";
+            cout << "*** ABEND: invalid opcode ***\n\n";
             return;
         }
 
 		// Increment instruction counter if needed.
-        if((operation_code != BRANCH && operation_code != BRANCHZERO && operation_code != BRANCHNEG && operation_code != HALT) && (operation_code = !done))
-        {
-             instruction_counter++;
-        }
-        
+        // if (not done && this instruction was not a branch: intstruction_counter++)
+        if (done == false && operation_code < BRANCH)
+           instruction_counter++;
     }
 
     // Print successful termination message.
-	cout << "*** Simplesim execution terminated ***\n";
-    
+	cout << "*** Simplesim execution terminated ***\n" << endl;
 }
 
 /**
@@ -343,60 +237,39 @@ void simplesim::execute_program()
 void simplesim::dump() const
 {
     // Print registers.
-    cout << endl << left << "REGISTERS: " << setw(24) << endl;
-    cout << left << setw(24) << "accumulator: ";
-    cout << showpos << setfill('0') << internal << setw(5) << accumulator << noshowpos << setfill(' ') << endl;
-    cout << left << setw(24) << "instruction_counter: ";
-    cout << setfill('0') << right << setw(2) << instruction_counter << setfill(' ') << endl;
-    cout << left << setw(24) << "instruction_register: ";
-    cout << showpos << setfill('0') << internal << setw(5) << instruction_register << noshowpos << setfill(' ') << endl;
-    cout << left << setw(24) << "operation_code: ";
-    cout << setfill('0') << right << setw(2) << operation_code << setfill(' ') << endl;
-    cout << left << setw(24) << "operand: ";
-    cout << setfill('0') << right << setw(2) << operand << setfill(' ') << endl << endl;
-        
-
-    // Print memory.
-    cout << left << setw(24) << "MEMORY: " << endl; 
-    cout << right << setw(8) << 0;
-
-    //Loop to print out columns 0 - 9
-    for(int i = 1; i < 10; i++)
-    {
-        cout << right << setw(6) << i;
-    }
-
-
-    int i = 0,//An integer to hold the element location for the memory array
-        j = 0,//An integer to hold the value for which array tens place the output is currently on
-        k = 1;//An integer to hold how many array elements are printed per line
+    cout << setfill(' ');
+    cout << left << "REGISTERS:" << endl;
+    cout << left << setw(24) << "accumulator:" << internal << setw(5) << showpos << setfill('0') << accumulator << setfill(' ') << endl;
+    cout << left << setw(24) << "instruction_counter:" << right << setw(2) << noshowpos << setfill('0') << instruction_counter << setfill(' ') << endl; //
+    cout << left << setw(24) << "instruction_register:" << internal << setw(5) << showpos << setfill('0') << instruction_register << setfill(' ') << endl;
+    cout << left << setw(24) << "operation_code:" << right << setw(2) << noshowpos << setfill('0') << operation_code << setfill(' ') << endl; //
+    cout << left << setw(24) << "operand:" << right << setw(2) << noshowpos << setfill('0') << operand << endl << setfill(' ') << endl;//
     
-    //Adding a space in front of first row
-    cout << endl << " " << j;
+    // Print memory.
 
-    //Printing out each array value
-    while(i < 100 )
+    cout << left << "MEMORY:" << endl;
+
+    for (int i = 0; i <= 9; i++)
     {
-        cout << " " << internal << showpos << setfill('0') << setw(5) << memory[i] << noshowpos << setfill(' ');
-
-        //Check to print a newline
-        if( k % 10 == 0)
-        {
-            //Check to see if last line of array elements has been printed
-            if(j == 90)
-            {
-                cout << endl;
-                break;
-            }
-
-            //Print out the row number
-            j += 10;
-            cout << endl << j;
-        }
-
-        //Increment counters
-        i++;
-        k++;
-        
+        if (i == 0 )
+            cout << right << setw(8) << i;
+        if (i > 0)
+            cout << right << setw(6) << i;
+        if (i == 9)
+            cout << endl;
     }
+
+    for (int i = 0; i <= 99; i++)
+    {
+        if (i == 0)
+            cout << right << noshowpos << setw(2) << i;
+        if ((i % 10) == 0 and i <= 90 and i != 0)
+            cout << endl << right << noshowpos << setw(2) << i;
+
+        cout << " " << internal << setw(5) << showpos << setfill('0') << memory[i] << setfill(' ');
+
+        if (i == 99)
+            cout << endl;
+    }
+
 }
