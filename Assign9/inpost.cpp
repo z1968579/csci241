@@ -1,8 +1,8 @@
 /**
  * @file inpost.cpp
  * @author Jacob Rudawski (z1968579) & Jacob Kurbis (z1945650)
- * @brief CSCI 241 Assignment 7
- * @date 2022-20-22
+ * @brief CSCI 241 Assignment 9
+ * @date 11-09-2022
  */
 
 #include <iostream>

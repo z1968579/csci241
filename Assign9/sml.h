@@ -1,14 +1,12 @@
 #ifndef SML_H
 #define SML_H
 
-//********************************************************************
-//
-// sml.h
-// CSCI 241 Assignment 4
-//
-// Created by Jacob Kurbis (z1945650)
-//
-//********************************************************************
+/**
+ * @file sml.h
+ * @author Jacob Rudawski (z1968579) & Jacob Kurbis (z1945650)
+ * @brief CSCI 241 Assignment 9
+ * @date 11-09-2022
+ */
 
 //Input/Output Operations
 #define READ 11

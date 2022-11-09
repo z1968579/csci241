@@ -1,14 +1,12 @@
 #ifndef SIMPLESIM_H
 #define SIMPLESIM_H
 
-//********************************************************************
-//
-// simplesim.h
-// CSCI 241 Assignment 4
-//
-// Created by Jacob Kurbis (z1945650)
-//
-//********************************************************************
+/**
+ * @file simplesim.h
+ * @author Jacob Rudawski (z1968579) & Jacob Kurbis (z1945650)
+ * @brief CSCI 241 Assignment 9
+ * @date 11-09-2022
+ */
 
 class simplesim
 {

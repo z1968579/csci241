@@ -1,14 +1,9 @@
-//********************************************************************
-//
-// simplesim.cpp
-// CSCI 241 Assignment 4
-//
-// Created by Jacob Kurbis (z1945650)
-// 
-// Purpose: Is to write a program that simulates a computer, one that 
-//          is capable of executing machine language programs.
-//
-//********************************************************************
+/**
+ * @file simplesim.cpp
+ * @author Jacob Rudawski (z1968579) & Jacob Kurbis (z1945650)
+ * @brief CSCI 241 Assignment 9
+ * @date 11-09-2022
+ */
 
 #include <iostream>
 #include <iomanip>
