@@ -153,18 +153,23 @@ void scc::first_pass()
         else if (command == "let")
         {
             // ... code to process 'let' command ...
+            handle_let(ss, buffer1);
         }
         else if (command == "goto")
         {
             // ... code to process 'goto' command ...
+            handle_goto(ss);
         }
         else if (command == "if")
         {
             // ... code to process 'if' command ...
+            handle_if(ss);
         }
         else if (command == "print")
         {
             // ... code to process 'print' command ...
+            handle_print(ss);
+
         }
         else if (command == "rem")
         {
@@ -188,7 +193,7 @@ void scc::second_pass()
     
     // Compute the starting location of the stack, just
     // above the constants and variables.
-    //int stack_start = next_const_or_var_addr - 1; -->Error message said this was not used
+    int stack_start = next_const_or_var_addr - 1;
     
     // Loop through the flags and memory arrays.
     for (int i = 0; i < next_instruction_addr; i++)
@@ -199,18 +204,28 @@ void scc::second_pass()
             if (flags[i] > 0)
             {
                 // Line number for goto instruction.
+                int idx = search_symbol_table(flags[i], 'L');
+                memory[i] += symbol_table[idx].location;
             }
             else if (flags[i] == -2)
             {
                 // Special right operand location.
+                memory[i] += next_const_or_var_addr;
             }
             else if (flags[i] < -2)
             {
                 // Stack location.
+                int idx = -3 - flags[i];
+                // location fo that stack elemet = stack start - idx;
+                int location = stack_start - idx;
+                stack_space_check(location);
+
+                // check to see if location referenced by stack index is within the bounds of the space available for te stack
+                // add location to instruction 
+                memory[i] += location;
             }
         }
     }
-
 }
 
 /**
