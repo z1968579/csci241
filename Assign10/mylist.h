@@ -42,9 +42,9 @@ class mylist
     friend std::ostream& operator<<<>(std::ostream&, const mylist<T>&);
 
     private:
-        size_t l_size = 0;
-        node<T>* l_back = nullptr;
-        node<T>* l_front = nullptr;
+        size_t list_size = 0;
+        node<T>* list_back = nullptr;
+        node<T>* list_front = nullptr;
         void clone(const mylist<T>& x);
 
     public:
@@ -73,9 +73,9 @@ class mylist
 };
 
 /**
- * Constructs a myqueue with a copy of the elements of another myqueue.
+ * Constructs a mylist with a copy of the elements of another mylist.
  *
- * @param x Another myqueue object whose contents are copied.
+ * @param x Another mylist object whose contents are copied.
  */
 template <class T>
 mylist<T>::mylist(const mylist<T>& x)
@@ -85,7 +85,7 @@ mylist<T>::mylist(const mylist<T>& x)
 }
 
 /**
- * @brief: Destroys the myqueue object.
+ * @brief: Destroys the mylist object.
  */
 template <class T>
 mylist<T>::~mylist()
@@ -94,58 +94,51 @@ mylist<T>::~mylist()
 }
 
 /**
- * @brief: Sets a myqueue back to empty, without deleting its dynamic storage.
+ * @brief: Sets a mylist back to empty, without deleting its dynamic storage.
  */
 template <class T>
 void mylist<T>::clear()
 {
-    while (l_size != 0)
+    while (list_size != 0)
     {
         pop_back();
     }
 }
 
 /**
- * Returns whether the myqueue is empty: i.e., whether its size is 0.
+ * Returns whether the mylist is empty: i.e., whether its size is 0.
  *
  * @return true if the size is 0, false otherwise.
  */
 template <class T>
 bool mylist<T>::empty() const
 {
-    return (l_size == 0);
+    return (list_size == 0);
 }
 
 /**
- * Returns the size of the myqueue.
+ * Returns the size of the mylist.
  *
- * @return The number of values stored in the myqueue.
+ * @return The number of values stored in the mylist.
  */
 template <class T>
 size_t mylist<T>::size() const
 {
-    return l_size;
+    return list_size;
 }
 
+/**
+ * Makes a copy of a mylist object's linked list.
+ *
+ * @param x Another mylist object whose linked list is copied.
+ */
 template <class T>
 void mylist<T>::clone(const mylist<T>& x)
 {
-    for (node<T>* ptr = x.l_front; ptr != nullptr; ptr = ptr->next)
+    for (node<T>* ptr = x.list_front; ptr != nullptr; ptr = ptr->next)
     {
         push_back(ptr->value);
     }
-}
-
-
-template <class T>
-mylist<T>& mylist<T>::operator=(const mylist<T>& x)
-{
-    if (this !=& x)
-    {
-        clear();
-        clone(x);
-    }
-    return* this;
 }
 
 
@@ -156,7 +149,7 @@ const T& mylist<T>::front() const
     {
         throw underflow_error("underflow exception on call to front()");
     }
-    return l_front->value;
+    return list_front->value;
 }
 
 template <class T>
@@ -166,7 +159,31 @@ T& mylist<T>::front()
     {
         throw underflow_error("underflow exception on call to front()");
     }
-    return l_front->value;
+    return list_front->value;
+}
+
+/**
+ * Inserts a value at the front of the mylist.
+ *
+ * @param value An integer value to insert.
+ */
+template <class T>
+void mylist<T>::push_front(const T& value)
+{
+    node<T>* new_node = new node<T>(value);
+    new_node->next = list_front;
+
+    if (empty())
+    {
+        list_back = new_node;
+    }
+    else
+    {
+        list_front->previous = new_node;
+    }
+
+    list_front = new_node;
+    list_size++;
 }
 
 template <class T>
@@ -176,7 +193,7 @@ const T& mylist<T>::back() const
     {
         throw underflow_error("underflow exception on call to back()");
     }
-    return l_back->value;
+    return list_back->value;
 }
 
 
@@ -187,11 +204,11 @@ T& mylist<T>::back()
     {
         throw underflow_error("underflow exception on call to back()");
     }
-    return l_back->value;
+    return list_back->value;
 }
 
 /**
- * Inserts a value at the back of the myqueue.
+ * Inserts a value at the back of the mylist.
  *
  * @param value An integer value to insert.
  */
@@ -199,47 +216,24 @@ template <class T>
 void mylist<T>::push_back(const T& value)
 {
     node<T>* new_node = new node<T>(value);
-
-    new_node->previous = l_back;
+    new_node->previous = list_back;
 
     if (empty())
-        l_front = new_node;
+    {
+        list_front = new_node;
+    }
     else
-        l_back->next = new_node;
+    {
+        list_back->next = new_node;
+    }
 
-    // step 3
-    l_back = new_node;
-
-    l_size++;
+    list_back = new_node;
+    list_size++;
 }
 
-/**
- * Inserts a value at the front of the myqueue.
- *
- * @param value An integer value to insert.
- */
-template <class T>
-void mylist<T>::push_front(const T& value)
-{
-    node<T>* new_node = new node<T>(value);
-
-    //Step 1
-    new_node->next = l_front;
-
-    //step 2
-    if (empty())
-        l_back = new_node;
-    else
-        l_front->previous = new_node;
-
-    // step 3
-    l_front = new_node;
-
-    l_size++;
-}
 
 /**
- * Removes the value at the back of the myqueue.
+ * Removes the value at the back of the mylist.
  */
 template <class T>
 void mylist<T>::pop_back()
@@ -249,24 +243,24 @@ void mylist<T>::pop_back()
         throw underflow_error("underflow exception on call to pop_back()");
     }
 
-    node<T>* delete_node = l_back;
-    l_back = delete_node->previous;
+    node<T>* delete_node = list_back;
+    list_back = delete_node->previous;
 
-    if (l_back == nullptr)
+    if (list_back == nullptr)
     {
-        l_front = nullptr;
+        list_front = nullptr;
     }
     else
     {
-        l_back->next = nullptr;
+        list_back->next = nullptr;
     }
 
     delete delete_node;
-    l_size--;
+    list_size--;
 }
 
 /**
- * Removes the value at the front of the myqueue.
+ * Removes the value at the front of the mylist.
  */
 template <class T>
 void mylist<T>::pop_front()
@@ -276,85 +270,102 @@ void mylist<T>::pop_front()
         throw underflow_error("underflow exception on call to pop_front()");
     }
 
-    node<T>* delete_node = l_front;
-    l_front = delete_node->next;
+    node<T>* delete_node = list_front;
+    list_front = delete_node->next;
 
-    if (l_front == nullptr)
+    if (list_front == nullptr)
     {
-        l_back = nullptr;
+        list_back = nullptr;
     }
     else
     {
-        l_front->previous = nullptr;
+        list_front->previous = nullptr;
     }
 
     delete delete_node;
-    l_size--;
+    list_size--;
 }
 
 
 template <class T>
 bool mylist<T>::operator==(const mylist<T>& rhs) const
 {
-    // First check the size
-    if (rhs.l_size != l_size)
+    if (rhs.list_size != list_size)
     {
         return false;
     }
 
-    // if sizes are equal loop through and compare the values in each
-    node<T>* ptr = l_front;
-    node<T>* rptr = rhs.l_front;
-    while (ptr != nullptr && rptr != nullptr)
+    node<T>* ptr = list_front;
+    node<T>* lptr = rhs.list_front;
+    while (ptr != nullptr && lptr != nullptr)
     {
-        // anything different return false 
-        if (ptr->value != rptr->value)
+        if (ptr->value != lptr->value)
         {
             return false;
         }
         ptr = ptr->next;
-        rptr = rptr->next;
+        lptr = lptr->next;
     }
     return true;
 }
 
+/**
+ * Assigns new contents to a mylist.
+ *
+ * @param x A mylist object whose contents are copied.
+ *
+ * @return The value of the modified left operand.
+ */
+template <class T>
+mylist<T>& mylist<T>::operator=(const mylist<T>& x)
+{
+    if (this != &x)
+    {
+        clear();
+        clone(x);
+    }
+    return *this;
+}
 
 template <class T>
 bool mylist<T>::operator<(const mylist<T>& rhs) const
 {
-    node<T>* rptr = rhs.l_front;
-    node<T>* ptr = l_front; 
+    node<T>* lptr = rhs.list_front;
+    node<T>* ptr = list_front; 
 
-    // Loop through the list together 
-    while (ptr != nullptr && rptr != nullptr)
+    while (ptr != nullptr && lptr != nullptr)
     {
-        if (ptr->value < rptr->value)
+        if (ptr->value < lptr->value)
         {
             return true;
         }
-        else if (ptr->value > rptr->value)
+        else if (ptr->value > lptr->value)
         {
             return false;
         }
 
-        // move on to the next element (front to back)
-        rptr = rptr->next;
+        lptr = lptr->next;
         ptr = ptr->next;
     }
-
-    return (l_size < rhs.l_size) ? true : false;
+    return (list_size < rhs.list_size) ? true : false;
 }
 
-
+/**
+ * Inserts the elements of the mylist into an output stream.
+ *
+ * @param out The output stream.
+ * @param obj A mylist object to insert into the stream.
+ *
+ * @return The output stream.
+ */
 template <class T>
-std::ostream& operator<<(std::ostream& os, const mylist<T>& obj)
+std::ostream& operator<<(std::ostream& out, const mylist<T>& obj)
 {
-    // Loop through the obj mylist passed and print each element followed by a space
-    for (node<T>* ptr = obj.l_front; ptr != nullptr; ptr = ptr->next)
+    for (node<T>* ptr = obj.list_front; ptr != nullptr; ptr = ptr->next)
     {
-        os << ptr->value << " ";
+        out << ptr->value << " ";
     }
-    return os;
+    return out;
 }
 
 #endif
