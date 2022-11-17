@@ -176,11 +176,19 @@ void mylist<T>::push_front(const T& value)
     if (empty())
     {
         list_back = new_node;
+<<<<<<< HEAD
     }
     else
     {
         list_front->previous = new_node;
     }
+=======
+    }
+    else
+    {
+        list_front->previous = new_node;
+    }
+>>>>>>> cb670cb1230a46d0fbaa7094418150d54b7c9cb7
 
     list_front = new_node;
     list_size++;
