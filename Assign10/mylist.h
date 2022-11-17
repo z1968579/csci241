@@ -18,12 +18,12 @@ class mylist;
 template <class T>
 struct node
 {
-    // data members
+    //data members
     node<T>* next;
     node<T>* previous;
     T value;
 
-    // constructor
+    //constructor
     node<T> (const T& value = T(), node<T>* next = nullptr, node<T>* previous = nullptr)
     {
         this->next = next;
@@ -42,12 +42,16 @@ class mylist
     friend std::ostream& operator<<<>(std::ostream&, const mylist<T>&);
 
     private:
+
+        //data members
         size_t list_size = 0;
         node<T>* list_back = nullptr;
         node<T>* list_front = nullptr;
         void clone(const mylist<T>& x);
 
     public:
+
+        //methods
         mylist() = default;
         mylist(const mylist<T>& x);
         ~mylist();
@@ -73,9 +77,9 @@ class mylist
 };
 
 /**
- * Constructs a mylist with a copy of the elements of another mylist.
+ * @brief: Constructs a mylist with a copy of the elements of another mylist.
  *
- * @param x Another mylist object whose contents are copied.
+ * @param x: A mylist object whose contents are copied.
  */
 template <class T>
 mylist<T>::mylist(const mylist<T>& x)
@@ -85,7 +89,7 @@ mylist<T>::mylist(const mylist<T>& x)
 }
 
 /**
- * @brief: Destroys the mylist object.
+ * @brief: Destroys the mylist object; Destructor
  */
 template <class T>
 mylist<T>::~mylist()
@@ -106,9 +110,9 @@ void mylist<T>::clear()
 }
 
 /**
- * Returns whether the mylist is empty: i.e., whether its size is 0.
+ * @brief: Returns whether the mylist is empty
  *
- * @return true if the size is 0, false otherwise.
+ * @return true: A boolean variable representing true or false, if the size is 0, false otherwise.
  */
 template <class T>
 bool mylist<T>::empty() const
@@ -117,9 +121,9 @@ bool mylist<T>::empty() const
 }
 
 /**
- * Returns the size of the mylist.
+ * @brief: Returns the size of the mylist.
  *
- * @return The number of values stored in the mylist.
+ * @return list_size: A size_t data member holding the number of values stored in the mylist.
  */
 template <class T>
 size_t mylist<T>::size() const
@@ -128,9 +132,9 @@ size_t mylist<T>::size() const
 }
 
 /**
- * Makes a copy of a mylist object's linked list.
+ * @brief: Makes a copy of a mylist object's linked list.
  *
- * @param x Another mylist object whose linked list is copied.
+ * @param x: A mylist object whose linked list is copied.
  */
 template <class T>
 void mylist<T>::clone(const mylist<T>& x)
@@ -141,7 +145,11 @@ void mylist<T>::clone(const mylist<T>& x)
     }
 }
 
-
+/**
+ * @brief: Returns the value of the front node in the list.
+ * 
+ * @return list_front->value: A T data member holding the value of the front node in the list.
+ */ 
 template <class T>
 const T& mylist<T>::front() const
 {
@@ -152,6 +160,11 @@ const T& mylist<T>::front() const
     return list_front->value;
 }
 
+/**
+ * @brief: Returns the value of the front node in the list.
+ * 
+ * @return list_front->value: A T data member holding the value of the front node in the list.
+ */
 template <class T>
 T& mylist<T>::front()
 {
@@ -162,10 +175,11 @@ T& mylist<T>::front()
     return list_front->value;
 }
 
+
 /**
- * Inserts a value at the front of the mylist.
+ * @brief: Inserts a value at the front of the mylist.
  *
- * @param value An integer value to insert.
+ * @param value: An integer value to insert at the front of the mylist.
  */
 template <class T>
 void mylist<T>::push_front(const T& value)
@@ -186,6 +200,11 @@ void mylist<T>::push_front(const T& value)
     list_size++;
 }
 
+/**
+ * @brief: Returns the value of the back node in the list 
+ * 
+ * @return list_back->value: A T data member holding the value of the back node in the list.
+ */
 template <class T>
 const T& mylist<T>::back() const
 {
@@ -197,6 +216,11 @@ const T& mylist<T>::back() const
 }
 
 
+/**
+ * @brief: Returns the value of the back node in the list 
+ * 
+ * @return list_back->value: A T data member holding the value of the back node in the list.
+ */
 template <class T>
 T& mylist<T>::back()
 {
@@ -208,9 +232,9 @@ T& mylist<T>::back()
 }
 
 /**
- * Inserts a value at the back of the mylist.
+ * @brief: Inserts a value at the back of the mylist.
  *
- * @param value An integer value to insert.
+ * @param value: An integer value to insert at the back of the mylist.
  */
 template <class T>
 void mylist<T>::push_back(const T& value)
@@ -233,7 +257,7 @@ void mylist<T>::push_back(const T& value)
 
 
 /**
- * Removes the value at the back of the mylist.
+ * @brief: Removes the value at the back of the mylist.
  */
 template <class T>
 void mylist<T>::pop_back()
@@ -260,7 +284,7 @@ void mylist<T>::pop_back()
 }
 
 /**
- * Removes the value at the front of the mylist.
+ * @brief: Removes the value at the front of the mylist.
  */
 template <class T>
 void mylist<T>::pop_front()
@@ -286,7 +310,16 @@ void mylist<T>::pop_front()
     list_size--;
 }
 
-
+/**
+ * @brief: Compares two mylist objects; Returns true if the two lists contain the same number of nodes, and 
+ *         if each element stored in the left-hand-side list is equal to the corresponding element of the right-hand-side list. 
+ *         Otherwise, the method returns false.
+ * 
+ * @param rhs: A mylist object to compare to the left-hand-side list.
+ *
+ * @return true: A boolean value representing true
+ * @return false: A boolean value representing false
+ */
 template <class T>
 bool mylist<T>::operator==(const mylist<T>& rhs) const
 {
@@ -309,12 +342,13 @@ bool mylist<T>::operator==(const mylist<T>& rhs) const
     return true;
 }
 
+
 /**
- * Assigns new contents to a mylist.
+ * @brief: Assigns new contents to a mylist.
  *
  * @param x A mylist object whose contents are copied.
  *
- * @return The value of the modified left operand.
+ * @return *this: The value of the modified left operand.
  */
 template <class T>
 mylist<T>& mylist<T>::operator=(const mylist<T>& x)
@@ -327,6 +361,14 @@ mylist<T>& mylist<T>::operator=(const mylist<T>& x)
     return *this;
 }
 
+/**
+ * @brief: Compares two mylist objects by a lexicographical comparison of the two lists.
+ * 
+ * @param rhs: A mylist object to compare to the left-hand-side list.
+ *
+ * @return true: A boolean value representing true
+ * @return false: A boolean value representing false
+ */
 template <class T>
 bool mylist<T>::operator<(const mylist<T>& rhs) const
 {
@@ -359,12 +401,12 @@ bool mylist<T>::operator<(const mylist<T>& rhs) const
 }
 
 /**
- * Inserts the elements of the mylist into an output stream.
+ * @brief: Sends an entire mylist to standard output
  *
- * @param out The output stream.
- * @param obj A mylist object to insert into the stream.
+ * @param out: The output stream.
+ * @param obj: A mylist object to insert into the stream.
  *
- * @return The output stream.
+ * @return out: The output stream.
  */
 template <class T>
 std::ostream& operator<<(std::ostream& out, const mylist<T>& obj)
