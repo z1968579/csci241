@@ -85,7 +85,7 @@ mylist<T>::mylist(const mylist<T>& x)
 }
 
 /**
- * Destroys the myqueue object.
+ * @brief: Destroys the myqueue object.
  */
 template <class T>
 mylist<T>::~mylist()
@@ -94,7 +94,7 @@ mylist<T>::~mylist()
 }
 
 /**
- * Sets a myqueue back to empty, without deleting its dynamic storage.
+ * @brief: Sets a myqueue back to empty, without deleting its dynamic storage.
  */
 template <class T>
 void mylist<T>::clear()
