@@ -56,8 +56,6 @@ private:
     void print_level(node<K, V> *root, int level) const;
     const K &min(node<K, V> *root) const;
     const K &max(node<K, V> *root) const;
-    //Idk if these are required or not, the instructions say that you are encouraged to write your own functions
-    //Probably required lol
 
 public:
 
@@ -79,8 +77,7 @@ public:
     void inorder() const;
     void postorder() const;
     void level_order() const;
-
-    void destroy(node<K, V> *root);//An added member function to destroy the tree
+    void destroy(node<K, V> *root);
 
 };
 
@@ -179,11 +176,34 @@ size_t bstree<K, V>::height() const
     return height(root);
 }
 
+
+/**
+ * @brief Helper function for the height function, recursivly finds the height/depth of the tree
+ *
+ * @param n A node in the tree
+ *
+ * @return size_t the height of tree
+ */
+template <class K, class V>
+size_t bstree<K, V>::height(node<K, V> *n) const
+{
+    if (n == nullptr)
+    {
+        return 0;
+    }
+
+    int leftheight = height(n->left);
+    int rightheight = height(n->right);
+
+    return std::max(leftheight, rightheight) + 1;
+}
+
+
 /**
  * @brief Checks if tree is empty
  * 
- * @return true if tree is empty
- * @return false if there is at least one node
+ * @return true: If tree is empty
+ * @return false: If there is at least one node
  */
 template <class K, class V>
 bool bstree<K, V>::empty() const
@@ -195,12 +215,32 @@ bool bstree<K, V>::empty() const
 /**
  * @brief Returns the minimum key in the tree
  * 
- * @return minium key
+ * @return The minimum key
  */
 template <class K, class V>
 const K &bstree<K, V>::min() const
 {
     return min(root);
+}
+
+
+/**
+ *
+ * @brief Helper function for min, recursively looks for the max key
+ *
+ * @param root The current node
+ *
+ * @return const K& The min key
+ *
+ */
+template <class K, class V>
+const K &bstree<K, V>::min(node<K, V> *root) const
+{
+    if (root->left != nullptr)
+    {
+        return min(root->left);
+    }
+    return root->key;
 }
 
 
@@ -217,6 +257,26 @@ const K &bstree<K, V>::max() const
 
 
 /**
+ *
+ * @brief Helper function for max, recursively looks for the max key
+ *
+ * @param root The current node
+ *
+ * @return const K& the max key
+ *
+ */
+template <class K, class V>
+const K &bstree<K, V>::max(node<K, V> *root) const
+{
+    if (root->right != nullptr)
+    {
+        return max(root->right);
+    }
+    return root->key;
+}
+
+
+/**
  * @brief Inserts a new node into the tree
  * 
  * @param key The key of the new node
@@ -229,11 +289,11 @@ template <class K, class V>
 bool bstree<K, V>::insert(const K &key, const V &value)
 {
     // root     : pointer to the root node of the tree (nullptr if tree is empty)
-    // t_size   : tree size  
+    // tree_size: tree size  
     // p        : pointer to a tree node
     // parent   : pointer to the parent node of p (nullptr if p points to the root node)
     // new_node : pointer used to create a new tree node
-
+    
     // Start at the root of the tree
     node<K, V> *p = root;
     node<K, V> *parent = nullptr;
@@ -251,8 +311,7 @@ bool bstree<K, V>::insert(const K &key, const V &value)
             p = p->right;
         }
     }
-
-    // If duplicates are disallowed, signal that insertion has failed
+    // If duplicates are disallowed, signal that insertion has failed.
     if (p != nullptr)
     {
         return false;
@@ -278,7 +337,6 @@ bool bstree<K, V>::insert(const K &key, const V &value)
     }
     tree_size++;
 
-    // If duplicates are disallowed, signal that insertion has succeeded
     return true;
 }
 
@@ -286,7 +344,7 @@ bool bstree<K, V>::insert(const K &key, const V &value)
 /**
  * @brief Removes a node from the tree
  * 
- * @param key of the node to be removed
+ * @param key Key of the node to be removed
  * 
  * @return true if node removed
  * @return false if node not removed
@@ -295,7 +353,7 @@ template <class K, class V>
 bool bstree<K, V>::remove(const K& key)
 {
     // root           : pointer to the root of the binary search tree
-    // t_size         : tree size  
+    // tree_size      : tree size  
     // p              : pointer to the node to delete from the tree
     // parent         : pointer to the parent node of the node to delete from the tree (or 
     //                  nullptr if deleting the root node)
@@ -318,7 +376,7 @@ bool bstree<K, V>::remove(const K& key)
         }
     }
 
-    // If the node to delte was not found, signal failure.
+    // If the node to delete was not found, signal failure.
     if (p == nullptr)
     {
         return false;
@@ -390,7 +448,6 @@ bool bstree<K, V>::remove(const K& key)
     delete[] p;
     tree_size--;
 
-    // Success
     return true;
 }
 
@@ -398,132 +455,27 @@ bool bstree<K, V>::remove(const K& key)
 /**
  * @brief Finds the specified key in the bstree
  * 
- * @param key to be looking for
+ * @param key A node key to search for
  * 
- * @return const node<K, V> bstree node if found or just nullptr
+ * @return bstree node if found, otherwise return nullptr
  *
 */
 template <class K, class V>
 const node<K, V> *bstree<K, V>::find(const K &key) const
-{
+{    
     return find(key, root);
 }
 
 
 /**
- * @brief Preorder traversal of the tree
+ * @brief Helper function for find, recursivly searches the bstree for the key
+ *
+ * @param key A node key to search for
+ * @param root The pointer to the current node
+ *
+ * @return bstree node if found, otherwise nullptr
+ *
  */
-template <class K, class V>
-void bstree<K, V>::preorder() const
-{
-    preorder(root);
-}
-
-
-/**
- * @brief Inorder traversal of the tree
- */
-template <class K, class V>
-void bstree<K, V>::inorder() const
-{
-    inorder(root);
-}
-
-
-/**
- * @brief Postorder traversal of the tree
- */
-template <class K, class V>
-void bstree<K, V>::postorder() const
-{
-    postorder(root);
-}
-
-
-/**
- * @brief Level order traversal of the tree
- */
-template <class K, class V>
-void bstree<K, V>::level_order() const
-{
-    size_t h = height(root);
-
-    for (size_t i = 1; i <= h; i++)
-    {
-        print_level(root, i);
-    }
-}
-
-
-/**
- * @brief: Recursively destroys the dynamically allocated storage if the bst's nodes 
- * 
- * @param root: The current node to be destroyed
- */
-template <class K, class V>
-void bstree<K, V>::destroy(node<K, V> *root)
-{
-    if (root != nullptr)
-    {
-        destroy(root->left);
-        destroy(root->right);
-
-        delete[] root;
-    }
-}
-
-
-/******************************************************************************************************
- * Helper function for the copy constructor, recursive preorder traversal to copy a bstree
- * @param n a node in the bstree
-******************************************************************************************************/
-template <class K, class V>
-node<K, V> *bstree<K, V>::clone(node<K, V> *root)
-{
-    if (root != nullptr)
-    {
-        // Make a copy of the node pointed to by root
-        node<K, V> *new_node = new node<K, V>(root->key, root->value);
-
-        // Recursively copy the left and right subtrees of the node
-        new_node->left = clone(root->left);
-        new_node->right = clone(root->right);
-
-        return new_node;
-    }
-    else
-    {
-        return nullptr;
-    }
-}
-
-
-/******************************************************************************************************
- * Helper function for the height function, recursivly finds the height/depth of the tree
- * @param n a node in the tree
- * @return size_t the height of tree
-******************************************************************************************************/
-template <class K, class V>
-size_t bstree<K, V>::height(node<K, V> *n) const
-{
-    if (n == nullptr)
-    {
-        return 0;
-    }
-
-    int leftheight = height(n->left);
-    int rightheight = height(n->right);
-
-    return std::max(leftheight, rightheight) + 1;
-}
-
-
-/******************************************************************************************************
- * Helper function for find, recursivly searches the bstree for the key 
- * @param key key to look for
- * @param root current node we are on
- * @return const node<K, V> bstree node if found, otherwise nullptr
-******************************************************************************************************/
 template <class K, class V>
 const node<K, V> *bstree<K, V>::find(const K &key, node<K, V> *root) const
 {
@@ -548,10 +500,23 @@ const node<K, V> *bstree<K, V>::find(const K &key, node<K, V> *root) const
 }
 
 
-/******************************************************************************************************
- * Helper function for preorder, prints out key and value for the preorder traversal
- * @param root current node
-******************************************************************************************************/
+/**
+ * @brief Preorder traversal of the tree
+ */
+template <class K, class V>
+void bstree<K, V>::preorder() const
+{
+    preorder(root);
+}
+
+
+ /**
+ *
+ * @brief Helper function for preorder, prints out key and value for the preorder traversal
+ *
+ * @param root The pointer to the current node
+ *
+ */
 template <class K, class V>
 void bstree<K, V>::preorder(node<K, V> *root) const
 {
@@ -564,26 +529,23 @@ void bstree<K, V>::preorder(node<K, V> *root) const
 }
 
 
-/******************************************************************************************************
- * Helper function for postorder, prints out key and value for the postorder traversal
- * @param root current node
-******************************************************************************************************/
+/**
+ * @brief Inorder traversal of the tree
+ */
 template <class K, class V>
-void bstree<K, V>::postorder(node<K, V> *root) const
+void bstree<K, V>::inorder() const
 {
-    if (root != nullptr)
-    {
-        postorder(root->left);
-        postorder(root->right);
-        cout << root->key << ": " << root->value << endl;
-    }
+    inorder(root);
 }
 
 
-/******************************************************************************************************
- * Helper function for inorder, prints out key and value for the inorder traversal
- * @param root current node
-******************************************************************************************************/
+/**
+ *
+ * @brief Helper function for inorder, prints out key and value for the inorder traversal
+ *
+ * @param root The pointer to the current node
+ *
+ */
 template <class K, class V>
 void bstree<K, V>::inorder(node<K, V> *root) const
 {
@@ -596,11 +558,57 @@ void bstree<K, V>::inorder(node<K, V> *root) const
 }
 
 
-/******************************************************************************************************
- * Helper function for level order traversal, prints out key and value for the level order traversal
+/**
+ * @brief Postorder traversal of the tree
+ */
+template <class K, class V>
+void bstree<K, V>::postorder() const
+{
+    postorder(root);
+}
+
+
+ /**
+ *
+ * @brief Helper function for postorder, prints out key and value for the postorder traversal
+ *
+ * @param root The pointer to the current node
+ */
+template <class K, class V>
+void bstree<K, V>::postorder(node<K, V> *root) const
+{
+    if (root != nullptr)
+    {
+        postorder(root->left);
+        postorder(root->right);
+        cout << root->key << ": " << root->value << endl;
+    }
+}
+
+
+/**
+ * @brief Level order traversal of the tree
+ */
+template <class K, class V>
+void bstree<K, V>::level_order() const
+{
+    size_t h = height(root);
+
+    for (size_t i = 1; i <= h; i++)
+    {
+        print_level(root, i);
+    }
+}
+
+
+/**
+ *
+ * @brief Helper function for level order traversal, prints out key and value for the level order traversal
+ *
  * @param root current node
+ *
  * @param level current level on the bstree
-******************************************************************************************************/
+ */
 template <class K, class V>
 void bstree<K, V>::print_level(node<K, V> *root, int level) const
 {
@@ -620,35 +628,52 @@ void bstree<K, V>::print_level(node<K, V> *root, int level) const
     }
 }
 
-/******************************************************************************************************
- * Helper function for min, recursively looks for the max key
- * @param root the current node
- * @return const K& the min key
-******************************************************************************************************/
+
+/**
+ * @brief Recursively destroys the dynamically allocated storage if the bst's nodes 
+ * 
+ * @param root* A point to the current root node to be destroyed
+ */
 template <class K, class V>
-const K &bstree<K, V>::min(node<K, V> *root) const
+void bstree<K, V>::destroy(node<K, V> *root)
 {
-    if (root->left != nullptr)
+    if (root != nullptr)
     {
-        return min(root->left);
+        // Recursively destroy the left and right subtrees of the node pointed to by p.
+        destroy(root->left);
+        destroy(root->right);
+
+        delete[] root;
     }
-    return root->key;
 }
 
 
-/******************************************************************************************************
- * Helper function for max, recursively looks for the max key
- * @param root the current node
- * @return const K& the max key
-******************************************************************************************************/
+/**
+ * @brief Helper function for the copy constructor, recursive preorder traversal to copy a bstree
+ *
+ * @param n  A node in the bstree
+ * @param root*  Pointer to the current root node
+ *
+ * @return new_node  A new bstree node, otherwise nullptr
+ */
 template <class K, class V>
-const K &bstree<K, V>::max(node<K, V> *root) const
+node<K, V> *bstree<K, V>::clone(node<K, V> *root)
 {
-    if (root->right != nullptr)
+    if (root != nullptr)
     {
-        return max(root->right);
+        // Make a copy of the node pointed to by root
+        node<K, V> *new_node = new node<K, V>(root->key, root->value);
+
+        // Recursively copy the left and right subtrees of the node
+        new_node->left = clone(root->left);
+        new_node->right = clone(root->right);
+
+        return new_node;
     }
-    return root->key;
+    else
+    {
+        return nullptr;
+    }
 }
 
 #endif
