@@ -26,12 +26,12 @@ struct node
     node<K, V> *left;
     node<K, V> *right;
 
-    node<K, V>(const K &k = K(), const V &v = V(), node<K, V> *l = nullptr, node<K, V> *r = nullptr)
+    node<K, V> (const K &k = K(), const V &v = V(), node<K, V> *L = nullptr, node<K, V> *R = nullptr)
     {
         key = k;
         value = v;
-        left = l;
-        right = r;
+        left = L;
+        right = R;
     }
 };
 
@@ -44,7 +44,7 @@ private:
 
     //Data Members
     node<K, V> *root;
-    size_t tsize;
+    size_t tree_size;
 
     //Private Methods
     node<K, V> *clone(node<K, V> *root);
@@ -73,7 +73,7 @@ public:
     const K &min() const;
     const K &max() const;
     bool insert(const K &key, const V &value);
-    bool remove(const K& key);
+    bool remove(const K &key);
     const node<K, V> *find(const K &key) const;
     void preorder() const;
     void inorder() const;
@@ -86,7 +86,7 @@ public:
 
 
 /**
- * @brief: Default constructor; Sets the root to nullptr and the tsize to 0
+ * @brief Default constructor; Sets the root to nullptr and the tree_size to 0
  * 
  */
 template <class K, class V>
@@ -94,12 +94,12 @@ bstree<K, V>::bstree()
 {
     //Initialize the data members
     root = nullptr;
-    tsize = 0;
+    tree_size = 0;
 }
 
 
 /**
- * @brief: Destructor; Calls the clear() method
+ * @brief Destructor; Calls the clear() method
  * 
  */
 template <class K, class V>
@@ -110,24 +110,24 @@ bstree<K, V>::~bstree()
 
 
 /**
- * @brief: Copy constructor; Copies the tree's nodes
+ * @brief Copy constructor; Copies the tree's nodes
  * 
- * @param x: A reference to a const bstree to be copied
+ * @param x A reference to a const bstree to be copied
  */
 template <class K, class V>
 bstree<K, V>::bstree(const bstree<K, V> &x)
 {
-    tsize = x.tsize;
+    tree_size = x.tree_size;
     root = clone(x.root);
 }
 
 
 /**
- * @brief: Overloads the assignment operator
+ * @brief Overloads the assignment operator
  * 
- * @param rhs: Binary search tree to be copied
+ * @param rhs Binary search tree to be copied
  * 
- * @return: bstree<K, V>& reference to this
+ * @return bstree<K, V>& reference to this
  */
 template <class K, class V>
 bstree<K, V> &bstree<K, V>::operator=(const bstree<K, V> &rhs)
@@ -135,7 +135,7 @@ bstree<K, V> &bstree<K, V>::operator=(const bstree<K, V> &rhs)
     if (this != &rhs)
     {
         clear();
-        tsize = rhs.tsize;
+        tree_size = rhs.tree_size;
         root = clone(rhs.root);
     }
     return *this;
@@ -143,8 +143,8 @@ bstree<K, V> &bstree<K, V>::operator=(const bstree<K, V> &rhs)
 
 
 /**
- * @brief: Sets the tree back to an empty state, deleting all of the nodes in the tree 
- *         and setting the size back to 0.
+ * @brief Sets the tree back to an empty state, deleting all of the nodes in the tree 
+ *        and setting the size back to 0.
  *
  */
 template <class K, class V>
@@ -152,24 +152,24 @@ void bstree<K, V>::clear()
 {
     destroy(root);
     root = nullptr;
-    tsize = 0;
+    tree_size = 0;
 }
 
 
 /**
- * @brief: Returns the tree size
+ * @brief Returns the tree size
  * 
- * @return tsize: The size of the tree 
+ * @return tree_size, The size of the tree 
  */
 template <class K, class V>
 size_t bstree<K, V>::size() const
 {
-    return tsize;
+    return tree_size;
 }
 
 
 /**
- * @brief: Returns the height of the tree
+ * @brief Returns the height of the tree
  * 
  * @return height(root): The height of the tree
  */
@@ -179,23 +179,24 @@ size_t bstree<K, V>::height() const
     return height(root);
 }
 
-
-/******************************************************************************************************
- * Determines if the bstree is empty 
- * @return true if the bstree is empty
- * @return false if the bstree has at least one node
-******************************************************************************************************/
+/**
+ * @brief Checks if tree is empty
+ * 
+ * @return true if tree is empty
+ * @return false if there is at least one node
+ */
 template <class K, class V>
 bool bstree<K, V>::empty() const
 {
-    return (tsize == 0);
+    return (tree_size == 0);
 }
 
 
-/******************************************************************************************************
- * Find and returns the min key in the bstree
- * @return const K& the min key
-******************************************************************************************************/
+/**
+ * @brief Returns the minimum key in the tree
+ * 
+ * @return minium key
+ */
 template <class K, class V>
 const K &bstree<K, V>::min() const
 {
@@ -203,10 +204,11 @@ const K &bstree<K, V>::min() const
 }
 
 
-/******************************************************************************************************
- * Find and returns the max key in the bstree
- * @return const K& the max key
-******************************************************************************************************/
+/**
+ * @brief Returns the maximum key in the tree
+ * 
+ * @return maximum key
+ */
 template <class K, class V>
 const K &bstree<K, V>::max() const
 {
@@ -214,13 +216,15 @@ const K &bstree<K, V>::max() const
 }
 
 
-/******************************************************************************************************
- * Inserts a new node into the bst
- * @param key key to be inserted
- * @param value value to be inserted
- * @return true if the node was successfully inserted
+/**
+ * @brief Inserts a new node into the tree
+ * 
+ * @param key The key of the new node
+ * @param value The value of the new node
+ * 
+ * @return true if the node was inserted
  * @return false if the node was not inserted
-******************************************************************************************************/
+ */
 template <class K, class V>
 bool bstree<K, V>::insert(const K &key, const V &value)
 {
@@ -272,19 +276,21 @@ bool bstree<K, V>::insert(const K &key, const V &value)
             parent->right = new_node;
         }
     }
-    tsize++;
+    tree_size++;
 
     // If duplicates are disallowed, signal that insertion has succeeded
     return true;
 }
 
 
-/******************************************************************************************************
- * Remove a node
- * @param key key of node to be removed
+/**
+ * @brief Removes a node from the tree
+ * 
+ * @param key of the node to be removed
+ * 
  * @return true if node removed
- * @return false if node was not removed or not found
-******************************************************************************************************/
+ * @return false if node not removed
+ */
 template <class K, class V>
 bool bstree<K, V>::remove(const K& key)
 {
@@ -382,18 +388,21 @@ bool bstree<K, V>::remove(const K& key)
 
     // Delete the node, decrement the tree size, and signal success.
     delete[] p;
-    tsize--;
+    tree_size--;
 
     // Success
     return true;
 }
 
 
-/******************************************************************************************************
- * Attempts to find the specified key in the bstree
- * @param key key to be looking for
- * @return const node<K, V> bstree node if found, otherwise nullptr
-******************************************************************************************************/
+/**
+ * @brief Finds the specified key in the bstree
+ * 
+ * @param key to be looking for
+ * 
+ * @return const node<K, V> bstree node if found or just nullptr
+ *
+*/
 template <class K, class V>
 const node<K, V> *bstree<K, V>::find(const K &key) const
 {
@@ -401,9 +410,9 @@ const node<K, V> *bstree<K, V>::find(const K &key) const
 }
 
 
-/******************************************************************************************************
- * Preorder traversal of the bstree
-******************************************************************************************************/
+/**
+ * @brief Preorder traversal of the tree
+ */
 template <class K, class V>
 void bstree<K, V>::preorder() const
 {
@@ -411,9 +420,9 @@ void bstree<K, V>::preorder() const
 }
 
 
-/******************************************************************************************************
- * Inorder traversal of the bstree
-******************************************************************************************************/
+/**
+ * @brief Inorder traversal of the tree
+ */
 template <class K, class V>
 void bstree<K, V>::inorder() const
 {
@@ -421,9 +430,9 @@ void bstree<K, V>::inorder() const
 }
 
 
-/******************************************************************************************************
- * Postorder traversal of the bstree
-******************************************************************************************************/
+/**
+ * @brief Postorder traversal of the tree
+ */
 template <class K, class V>
 void bstree<K, V>::postorder() const
 {
@@ -431,9 +440,9 @@ void bstree<K, V>::postorder() const
 }
 
 
-/******************************************************************************************************
- * Level order traversal of the bstree
-******************************************************************************************************/
+/**
+ * @brief Level order traversal of the tree
+ */
 template <class K, class V>
 void bstree<K, V>::level_order() const
 {
