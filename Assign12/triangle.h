@@ -13,12 +13,17 @@
 class triangle : public shape
 {
 private:
+//Data Members
     int height;
     int base;
+
+//Member Functions
 public:
+    //Constructors
     triangle() = default;
     triangle(const string &color, int height, int base);
 
+    //Accessors
     virtual double get_area() const;
     virtual void print() const;
 };

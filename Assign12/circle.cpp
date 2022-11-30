@@ -29,7 +29,8 @@ circle::circle(const string &color, int radius) : shape(color)
 ******************************************************************************************************/
 double circle::get_area() const
 {
-    return M_PI * pow(radius, 2);
+    double area = M_PI * pow(radius, 2);
+    return area;
 }
 
 /******************************************************************************************************

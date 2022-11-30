@@ -29,7 +29,8 @@ triangle::triangle(const string &color, int height, int base) : shape(color)
 ******************************************************************************************************/
 double triangle::get_area() const
 {
-    return height * base / 2.0;
+    double area = (height * base) / 2.0;
+    return area;
 }
 
 /******************************************************************************************************

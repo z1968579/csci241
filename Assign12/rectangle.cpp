@@ -29,7 +29,8 @@ rectangle::rectangle(const string &color, int height, int width) : shape(color)
 ******************************************************************************************************/
 double rectangle::get_area() const
 {
-    return height * width;
+    double area = height * width;
+    return area;
 }
 
 /******************************************************************************************************

@@ -12,12 +12,17 @@
 
 class circle : public shape
 {
+//Data Members
 private:
     int radius;
+
+//Member Functions
 public:
+    //Constructors
     circle() = default;
     circle(const string &color, int radius);
 
+    //Mutators
     virtual void print() const;
     virtual double get_area() const;
 };
