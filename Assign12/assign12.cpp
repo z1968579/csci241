@@ -14,48 +14,42 @@
 
 using namespace std;
 
-int main(int argc, char *argv[])
+int main()
 {
 
-    // Declare either an array or a standard library vector of pointers to shape objects.
-    vector<shape*> array;
+    //Declare either an shape or a standard library vector of pointers to shape objects.
+    vector<shape*> shape;
 
-    // Dynamically create some circles, rectangles, and triangles (at least two of each). After creating each object, add it to the array or vector.
-    rectangle* rect1 = new rectangle("red", 8, 6);
-    rectangle* rect2 = new rectangle("blue", 3, 7);
-    array.push_back(rect1);
-    array.push_back(rect2);
+    shape.push_back(new circle("green", 10));
+	shape.push_back(new rectangle("red", 8, 6));
+	shape.push_back(new triangle("yellow", 8, 4));
+	shape.push_back(new triangle("black", 4, 10));
+	shape.push_back(new circle("orange", 5));
+	shape.push_back(new rectangle("blue", 3, 7));
 
-    //Output of the circles is getting printed out twice, not sure why
-    circle* circ1 = new circle("green", 10);
-    circle* circ2 = new circle("orange", 5);
-    array.push_back(circ1);
-    array.push_back(circ2);
+    cout << "Printing all shapes...\n\n";
 
-    triangle* tri1 = new triangle("yellow", 8, 4);
-    triangle* tri2 = new triangle("black", 4, 10);
-    array.push_back(tri1);
-    array.push_back(tri2);
-
-    // Loop through the array or vector of shape pointers and call the print() method for each of them.
-    for (size_t i = 0; i < array.size(); i++)
+    //Loop through the shape or vector of shape pointers and call the print() method for each of them.
+    for (size_t i = 0; i < shape.size(); i++)
     {
-        array[i]->print();
+        shape[i]->print();
     }
 
-    // Loop through the array or vector of shape pointers again and call the print() method for each of the circle objects in the array or vector.
-    for (size_t i = 0; i< array.size(); i++)
+    cout << "\nPrinting only circles...\n\n";
+
+    //Prints circles
+    for (size_t i = 0; i< shape.size(); i++)
     {
-        circle* cir = dynamic_cast<circle*>(array[i]);
-        if (cir != nullptr)
+        circle* circ = dynamic_cast<circle*>(shape[i]);
+        if (circ != nullptr)
         {
-            cir->print();
+            circ->print();
         }
     }
 
-    // Loop through the list of shape pointers one more time and delete each object.
-    for (size_t i = 0; i < array.size(); i++)
+    //Deconstructs each shape object
+    for (size_t i = 0; i < shape.size(); i++)
     {
-        array.pop_back();
+        shape.pop_back();
     }
 }

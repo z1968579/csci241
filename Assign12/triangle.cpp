@@ -5,37 +5,40 @@
  * @date 11-30-2022
  */
 
-#include "triangle.h"
 #include <iostream>
+#include "triangle.h"
 
 using std::cout;
 using std::endl;
 
-/******************************************************************************************************
- * Constructor for triangle
- * @param color color of the shape
- * @param height height of triangle
- * @param base base of triangle
-******************************************************************************************************/
+/**
+ * @brief Construct a new triangle::triangle object
+ * 
+ * @param color color of the triangle
+ * @param height height of the triangle
+ * @param base base 
+ */
 triangle::triangle(const string &color, int height, int base) : shape(color)
 {
     this->height = height;
     this->base = base;
 }
 
-/******************************************************************************************************
- * Returns the area of a triangle object
- * @return double 
-******************************************************************************************************/
+/**
+ * @brief Returns the area of the triangle
+ * 
+ * @return area 
+ */
 double triangle::get_area() const
 {
     double area = (height * base) / 2.0;
     return area;
 }
 
-/******************************************************************************************************
- * Prints out the triangles information
-******************************************************************************************************/
+/**
+ * @brief Prints out the triangle
+ * 
+ */
 void triangle::print() const
 {
     shape::print();

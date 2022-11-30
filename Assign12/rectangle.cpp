@@ -5,37 +5,41 @@
  * @date 11-30-2022
  */
 
-#include "rectangle.h"
 #include <iostream>
+#include "rectangle.h"
 
 using std::cout;
 using std::endl;
 
-/******************************************************************************************************
- * Constructor for Rectangle
- * @param color color of the shape
- * @param height height of rectangle
- * @param width width of rectangle
-******************************************************************************************************/
+
+/**
+ * @brief Construct a new rectangle
+ * 
+ * @param color color of shape
+ * @param height height of the rectangle
+ * @param width width of the rectangle
+ */
 rectangle::rectangle(const string &color, int height, int width) : shape(color)
 {
     this->height = height;
     this->width = width;
 }
 
-/******************************************************************************************************
- * Returns the area of a rectangle object
- * @return double 
-******************************************************************************************************/
+/**
+ * @brief Returns the area of the rectangle
+ * 
+ * @return area
+ */
 double rectangle::get_area() const
 {
     double area = height * width;
     return area;
 }
 
-/******************************************************************************************************
- * Prints out the rectangles information
-******************************************************************************************************/
+/**
+ * @brief Prints out the rectangle
+ * 
+ */
 void rectangle::print() const
 {
     shape::print();

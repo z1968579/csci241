@@ -12,19 +12,23 @@
 
 class circle : public shape
 {
-//Data Members
-private:
-    int radius;
+    //Data Members
+    private:
+        int radius;
 
-//Member Functions
-public:
-    //Constructors
-    circle() = default;
-    circle(const string &color, int radius);
+    //Member Functions
+    public:
+        //Constructor
+        circle(const string&, int);
 
-    //Mutators
-    virtual void print() const;
-    virtual double get_area() const;
+        //Accessors
+        void set_radius(int);
+        int get_radius() const;
+
+        virtual void print() const;
+        virtual double get_area() const;
+
+
 };
 
- #endif
+#endif

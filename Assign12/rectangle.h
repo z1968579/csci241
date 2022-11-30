@@ -12,20 +12,20 @@
 
 class rectangle : public shape
 {
-//Data Members
-private:
-    int height;
-    int width;
+    //Data Members
+    private:
+        int height;
+        int width;
 
-//Member Functions
-public:
-    //Constructors
-    rectangle() = default;
-    rectangle(const string &color, int height, int width);
+    //Member Functions
+    public:
+        //Constructors
+        rectangle() = default;
+        rectangle(const string &color, int height, int width);
 
-    //Accessors
-    virtual double get_area() const;
-    virtual void print() const;
+        //Accessors
+        virtual double get_area() const;
+        virtual void print() const;
 };
 
 
