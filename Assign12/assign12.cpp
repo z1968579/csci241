@@ -5,12 +5,13 @@
  * @date 11-30-2022
  */
 
+
+#include <iostream>
+#include <vector>
 #include "shape.h"
 #include "circle.h"
 #include "rectangle.h"
 #include "triangle.h"
-#include <iostream>
-#include <vector>
 
 using namespace std;
 

@@ -43,7 +43,8 @@ void circle::set_radius(int rad)
  * 
  * @return The data member containing the circle's radius
  *
- */int circle::get_radius() const
+ */
+int circle::get_radius() const
 {
     return radius;
 }
